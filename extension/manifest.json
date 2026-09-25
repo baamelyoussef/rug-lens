@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "Rug Lens \u2014 Terminal risk checks",
+  "version": "0.6.0",
+  "description": "Explainable Solana risk labels for Terminal. Holder, bundle and contract checks with explicit data coverage.",
+  "minimum_chrome_version": "120",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://api.rugcheck.xyz/*",
+    "https://api.dexscreener.com/*",
+    "https://api.mainnet-beta.solana.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Rug Lens"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://trade.padre.gg/*"
+      ],
+      "js": [
+        "activity.js",
+        "signals.js",
+        "engine.js",
+        "adapter.js",
+        "ui.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+# Dependencies, build output and local tooling
+node_modules/
+*.zip
+*.crx
+*.pem
+coverage/
+.nyc_output/
+dist/
+.cache/
+__pycache__/
+*.py[cod]
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Secrets and machine-specific configuration
+.env
+.env.*
+!.env.example
+*.key
+*.p12
+*.pfx
+credentials*.json
+secrets*.json
+
+# Private/local browsing captures; curated tests/data stays tracked
+/audit/
+/scripts/replay-trenches.mjs
+playwright-report/
+test-results/

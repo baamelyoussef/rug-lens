@@ -1,0 +1,1687 @@
+{
+  "source": "Generated using @solana/web3.js 1.98.4 PublicKey.findProgramAddressSync; first five independently captured Pump curve accounts",
+  "vectors": [
+    {
+      "mint": "5akhMcgCckow5ad7GpoWuA73JCqGZN4pFVm6ZiTfpump",
+      "address": "F6dUfxV6YH21djwgNz9iLPKQ4iEQ1CvaY2jJYTEJP2g8",
+      "bump": 255
+    },
+    {
+      "mint": "A4BJEVz6z2Fy9UKaJrN6uzTEEx3QBenrv1kuRUJKpump",
+      "address": "8cvJpZbsN9UMGtkywgp1KdjEYyR64Viis2nCjQz9Z2vr",
+      "bump": 255
+    },
+    {
+      "mint": "9mQGNgd9YK4sUMjQ3v9S8KvJPbsXpkqoPrU5nGX2qTLD",
+      "address": "2Tbdw13DGZ9w6kDEXYB6harhcbiZV8tdQP19s1Cno9G1",
+      "bump": 254
+    },
+    {
+      "mint": "Efyt4tMBmiYKjJwrSPLH7RuDVUQE2ofuTebFoNNGuqeR",
+      "address": "AWCcPiPRjfnSVKeV9H7xSk1iepHNTdjVRSB37q6BocVd",
+      "bump": 253
+    },
+    {
+      "mint": "4z74i8Jo5zTWkFyyrx5zuusLasgKu6JtREVKgKVSpump",
+      "address": "8Z7qJchy7j4CSyGedb9tx2LC2aoDSQKWYRzrtjS3PpGy",
+      "bump": 252
+    },
+    {
+      "mint": "CDib92vfcjJpBocPWmTAxnT9HpqMG4BjDrDpHCehhgDc",
+      "address": "D35yCWRf72MRTn2iCr8b2uf4K4VaABpY7CUVD3XqzWRc",
+      "bump": 255
+    },
+    {
+      "mint": "54Vc7NgBaGU4QS3nzhRt81PTS2yJegpVFXpRFYcA3L4W",
+      "address": "85DJeD6kGYEpBPfTa46oEsiZ3KfYaWFcHmcV6A4ZRuF8",
+      "bump": 252
+    },
+    {
+      "mint": "EHTxzCfqbQGfSbaXJ3dfZ2Xur1SZqJ1tUQp2MYuaqpB",
+      "address": "8i1fRMhXwDePZrsYQ7rtDQ255v56dVFTHf6KrdXq5nNb",
+      "bump": 255
+    },
+    {
+      "mint": "3eZ1ht6e1XC3vNMpY7cbfnCZ5SJr2uTCosphsSKSPYqr",
+      "address": "3ysoFJmKMBG918zSNKKcC2Bamz82YLGCVqigGT2fR8RY",
+      "bump": 254
+    },
+    {
+      "mint": "Cw5xCxptvPWhtL3j3GsbFMhyC4XihmkCYTCegDKhTJKB",
+      "address": "7ghLe24bz56b2dy7Cq4wJZpbDGMWCuFWsPDXA3fPaR5n",
+      "bump": 255
+    },
+    {
+      "mint": "9AvoVxYztm5EytCyVPKXug6k6me2bvnKvWC1ZUYLXzBH",
+      "address": "DgeWJgujr4fRpbs11N6QDtVrh2SUvERkYJ5zJKo6tRU2",
+      "bump": 251
+    },
+    {
+      "mint": "FthN1T3CQGV7DEhdUmWJZYgRU3eRMH1gXXTFEhjfdQud",
+      "address": "EiG2Zxeiu4EdYSJY6fYMGJqgiJzjbxERX6Hk696yvLGT",
+      "bump": 252
+    },
+    {
+      "mint": "AGMXqb9f73ATUtyt6pekdg8nDTZJvCzPgbmyBdhqdGD1",
+      "address": "HaLvQ2TWkLAg1xdrH5hBoVHYTLape56GGPG14fH3ChyJ",
+      "bump": 255
+    },
+    {
+      "mint": "Ba2xjekrkXQ424AmFG48TVmmVZprZrE5vnFXx6nwbPHh",
+      "address": "52d9GvTu9qjBMe4JxW2gVszeaYWqAo3Azg2C18omdfqf",
+      "bump": 255
+    },
+    {
+      "mint": "73N9K5SBD6jHnsroP1tQRK1m9udhdaYGpucLu9R8H9Z",
+      "address": "HVRs9esNAQskcFHnFenU4FeZHN1QzYF4MekYbP9xjKin",
+      "bump": 255
+    },
+    {
+      "mint": "55Uirv2nkwCyz3FFg1Dq6PrhCw3LtwjwgGMedtsbfLFv",
+      "address": "CxkEfZ9jyE8e6UxHhHgq5fMUgbWTe5h79CHCk6vitz2J",
+      "bump": 255
+    },
+    {
+      "mint": "BTViHdECgXvrEErtEELqoBLsjPq8oNttnQ3WGtCfYfrs",
+      "address": "6R9VPrRArcdVXeB5AY61zRDCnYD3ey1xHtgNoKdj5Z4N",
+      "bump": 253
+    },
+    {
+      "mint": "2ZVKosG1Bi5hbW2G98XcTJd8E2RQMqMTDWBtxVnwP3Cz",
+      "address": "8i3CDCZVW6KsHHCXK5qBXextyfybxEB7U2bVcRn4XAba",
+      "bump": 253
+    },
+    {
+      "mint": "GY5hxPsHaKdpCtWvxAfiySPb4Lbq6b5jukPi1yPv8qk2",
+      "address": "5Mb1j4mLL8jDHaSsqpKTvoBFSeFUy3JWQ61BnvdroGPk",
+      "bump": 255
+    },
+    {
+      "mint": "2SdzDbxKaKdWBYoRoMcSyqr3bhruwUco21x5Wi4z3gUD",
+      "address": "FfMn3PJ63UkQFXAbFRGHdvsWVc4yWEvgAnhKovD9bXiy",
+      "bump": 249
+    },
+    {
+      "mint": "BaUBBKwejJ4vu6GnJN8X9zXP8r5BTrritcHgWAJvDHML",
+      "address": "84JfFpuxT7FVVe2538RNB8raw1g9UPxXQvT6pG8GNteR",
+      "bump": 253
+    },
+    {
+      "mint": "C8FrHUQ8KQGiVRhus3Yx2YtTBgtyshohNLsbnL2R9XgL",
+      "address": "HAgUQ8XryKMYfzuHohrF3HzgUXV46nDG1pfhHK4VuRA7",
+      "bump": 255
+    },
+    {
+      "mint": "FxFzBszZdS4rUvCArJRfEXgsJKpZ6tgM4qxTtvHPNs6E",
+      "address": "6pgVYqVKCRHDLo8r4SitbRJ1HxnbmY49bvcfXeAJSRTM",
+      "bump": 249
+    },
+    {
+      "mint": "EV8yCAL7DR3vfvEcXkxSVFbCmzaJsia5M5rJWLagWaPp",
+      "address": "CpcEaMQgXh8vmvo3dtp3DFTQWeXn7bS7fw2Typ5F2mQS",
+      "bump": 255
+    },
+    {
+      "mint": "dEEtDN6w8BwutPciKkBv8cGrgaC3MZcMGCYtKYwZwgd",
+      "address": "DF6UrqCnHzivrr4AQAKnSHa8ra4K52zqW7TxFBfjQst6",
+      "bump": 255
+    },
+    {
+      "mint": "GFePWXrJ8NCSv9jNPhAYNJ9bKujXgb8TYA93XgS9vQfP",
+      "address": "DS1SRF8ptmZYcJMP1vUE5TuAkDZSNrMebxNkpEJfcAJR",
+      "bump": 255
+    },
+    {
+      "mint": "37YJBH86AzVSCoXmcNdJDnk5MdMfKckBmHd3ABvc1cfS",
+      "address": "47HeocC9rtAejZj9KxHNjonuw3xH1Hpqxq3WoBaSAb9c",
+      "bump": 254
+    },
+    {
+      "mint": "GK5z61NBXqCyoVGWugLRyLzcDbPhipAfhDwcj3xEZqrp",
+      "address": "3fmZWsxKB7msmfwqo8DvVfZmkgcx6HDTreWVPTki6dtw",
+      "bump": 254
+    },
+    {
+      "mint": "3T432zH77oVJsELoiRQQFU6qhSLunm4NPPGAXmG1aqxa",
+      "address": "Comp6H2ZctJfbkZSD9nXBKSjTRTvQkVVpdUttje5hDrP",
+      "bump": 255
+    },
+    {
+      "mint": "BXTwaLrq9RggbbKKG6wjPhYbWofrptWjvY4rVnEreGdz",
+      "address": "APu1DYV9434C4i9ZgUBhHekyr8Fs4Lxmbd6wjyiZit8A",
+      "bump": 251
+    },
+    {
+      "mint": "CdyQ3pBW5EvSzVoJAq9J73eeaWPrqoMGDE5DdGEu1Gr1",
+      "address": "F9bwQtqv2StgNFMoKs8JdYv8EgienNajQ8aCBmn6idD2",
+      "bump": 255
+    },
+    {
+      "mint": "5JQgX1gNZdHhb7LFSnmADehHUipyLUWzwHu2W6C4FVGJ",
+      "address": "4nNJK5NTW99uw9eaK9zWdM8gpd6Qj2TipBJGSAgWMtQr",
+      "bump": 253
+    },
+    {
+      "mint": "HMQjYZDbwKWQpTjnkUqwpizB8d7qYyJrUFC3X1v4C9tx",
+      "address": "6PWpCWGNAXQyEiDkqpYkFBru2yDyU8pu8gmhYkwigdY5",
+      "bump": 254
+    },
+    {
+      "mint": "6isRvZxJrawiY1oUqAfztqt6ZUAU4mmrgLDNDt4tqdst",
+      "address": "9EriaDWUpDkfjLRdgmd8q1VAvktfR7GZN9rdbGTW8YS7",
+      "bump": 254
+    },
+    {
+      "mint": "vDgAo8fHkwenpJSw4gx7DBBBrCB1YgFqf3dWBLkHp1S",
+      "address": "85t8askx2A7WkzFPP9D4y5c539z1KfnibDxXpUE2DFE1",
+      "bump": 254
+    },
+    {
+      "mint": "7ptsnzZnyurFFzuupY5LL5UHXMw2xUcgAGtLVu7TRfWe",
+      "address": "4UFaAEnqonR2oWvSjTPsuXNySbUaLfmBrMGrV88hbBv1",
+      "bump": 255
+    },
+    {
+      "mint": "8a4gTv18DmZmo8wzLeCRPNEzeU23BTVqRrEbGPrzXNyz",
+      "address": "Dum326EDrQ2SHE34Ky9kS8WSYN8pZyj2RdksZVRCei2H",
+      "bump": 255
+    },
+    {
+      "mint": "B9Q16SSQuJx5Tq28VH8qqWUxdwtxCh2smufo1aTFxxZf",
+      "address": "HBAs1SngqRt3qjN3sjtiYCcpVYAS2pSq6JATVEUd3rMG",
+      "bump": 255
+    },
+    {
+      "mint": "DjrWD179o4nG7dtqZohrXSwGkPKQsnCJEmzRRuDbeDY",
+      "address": "FQpPxodkMyfpSog58LunRZRp5oTpQJPgid1CdDuK6mRm",
+      "bump": 255
+    },
+    {
+      "mint": "5Dz6NoMoBTLD5oD6HaDzx4MrsQkj9n2aWzazKuAqW2yJ",
+      "address": "4iHubK98VpsCCZA2sCVURb5XmaRspZcsmuycqg2YLmEk",
+      "bump": 254
+    },
+    {
+      "mint": "CMVFsSg3u6zy7Lp1ikgzxu2S6oNSUhvbVUWTQHpG9wK4",
+      "address": "GZeg2PUM1Ua4TTVjJ74kRuJBtNxbtSYp8ZuL4CnSgxqt",
+      "bump": 255
+    },
+    {
+      "mint": "99mDKrbEsgM9FDSYdKE3erjJJBLwxER83kem3NLaZuca",
+      "address": "9Wm3Vcrq5jgiHRL1suELt2HfXvt5zC1YuDhALjQe335r",
+      "bump": 254
+    },
+    {
+      "mint": "3HMAP7xJ3CB2GsSekgGtGnCqdgNaZjEagqmvfvyfgMVm",
+      "address": "2gwAHJEktxWD2y6R9YgwNiUKTpJnEQSEu7X7SLF38wnT",
+      "bump": 252
+    },
+    {
+      "mint": "GapfhcGaYCvobAXmXeJMB5k7yGgy4pGoFhN8ha8KsvtJ",
+      "address": "5mwbModfFiwM49JhySrscc41t5KeFvWoVjhkwrt64rAM",
+      "bump": 254
+    },
+    {
+      "mint": "7fgS2odnudNFVLNWXKaP1xNszaArr216WkPvguxPzhuw",
+      "address": "FcDLN6PbYdrutPT9nAcnxD1FQ7mM4He4Sewqai2Ze2bw",
+      "bump": 255
+    },
+    {
+      "mint": "32ihFjAgQzLHZfi3sdidtPSAi6c8hVqsXqHWvUH4WE8R",
+      "address": "Fm5gnPgek6EamfKTMPLp4CKezv589enjhvSx6X2zfAQS",
+      "bump": 255
+    },
+    {
+      "mint": "CEJMxxvznsHnRCr1fx5uYh9xpeubzyFRcbhLXSeV5rHV",
+      "address": "F5CRQUekJV4ffqkCxNdAVE9QsRZKJDDuziDtAqibeC5u",
+      "bump": 255
+    },
+    {
+      "mint": "Bq1SKiYX64a6QmyyeGRrSfbuTPPPgUQtHYDYk7pNK7cW",
+      "address": "FEq7jRJCsYRsvE4SdfS2gaEiSBTXjRi7eeASHfRmGWF7",
+      "bump": 255
+    },
+    {
+      "mint": "8bSPfk9PwCehpogu1wLHpsSJ9ba1QdUpjpx16TkoC9BH",
+      "address": "CJ9nmzxEqeEUVSAEgLYoz1PjVsqwVH6QsrwQXcjdRvSL",
+      "bump": 255
+    },
+    {
+      "mint": "5uzAuh7pjURbeCAJxEiF8R1ukejjYaWg4tU9jFk5SW9g",
+      "address": "U5n53canBGP2Efys5iFG5PdqcFWZaA5ZsPX3VSm3WLw",
+      "bump": 250
+    },
+    {
+      "mint": "6F3gYoWHtntGknaC59fxp88GGvixNaxceoeUDGTaj55v",
+      "address": "GXsQfFwEiqBZEQr47NNHpXVykvDP51JeJg2fcGAzehSc",
+      "bump": 254
+    },
+    {
+      "mint": "DV2gakucUZ13u9i59WJJsWjm83BrkVka6BXQ5UWf4bCn",
+      "address": "Fx2hw14Uc7Stg6Qc39nZSnMXTw3vx1UEL2xShBDaGLTc",
+      "bump": 253
+    },
+    {
+      "mint": "4CpoNNcGcu5himjnEF6GUupghT7bzqU6ABij6FWLwUMB",
+      "address": "7xYmGHLLY8TBWLrPPRTmUJ7pxEmXiBUVFNuzhZUo7g4d",
+      "bump": 250
+    },
+    {
+      "mint": "iczp8sxAWKe7dkBRv1f8r7gAAakRMnUpppfDj3Ro6iA",
+      "address": "9CrrcczLbikaTehp58jXRTxWNVHSn1PBiV6We6tG7Rk8",
+      "bump": 254
+    },
+    {
+      "mint": "GsLkpntMjLmBuMBPeF1gSnFYzZB23ZQxgFn2WKyd5vYg",
+      "address": "4wNrqa6f6Pw1Fp3RFW2bPHeVx2sdRTkw9FwArAEzEAnv",
+      "bump": 254
+    },
+    {
+      "mint": "FudPFiwie1zbc5YVAP9h78L8FjUT2p3c1gXVfvqm2Ui8",
+      "address": "EWMpTyb3W6ZbPNU67A6DkgjYTaNpUhDtgjKfRNfpthFV",
+      "bump": 255
+    },
+    {
+      "mint": "473Lyd2zY6UETonEXAudLtsAkpY3TmH2vbrDRAqDHv2R",
+      "address": "EYSi3JmKPnkFsLUSefpYnttcHf3eVJAFGX2b1HEUdmzs",
+      "bump": 253
+    },
+    {
+      "mint": "BdtY1JNR5Yf7g41PYGJbZ37fHdo8NBDT2yduabaDSqAk",
+      "address": "7so7CBXzwBgfB3EMj5vM54FN685b1t2ogsRkj5g9pH6r",
+      "bump": 255
+    },
+    {
+      "mint": "DcU8keEGsV4zseTSqQhjuDxmA2qihLvE81q3CCHWfGPX",
+      "address": "AmgwSfuSLWMNBtojjAXX5wJ8ByVt9qHvV3iuaWnP3Svo",
+      "bump": 254
+    },
+    {
+      "mint": "7R8ZSUBqwVCgSSvUpABNrdKMTYmYZMkwp5xgoRA5MLV",
+      "address": "HeM2Eok4SFtuAKXjf5wDghkD8yvAgxYx1TYnNFAwURgV",
+      "bump": 255
+    },
+    {
+      "mint": "41tHxY9p5qNxvMhf8v1om9Zfsxw9mSbXkV5xSWFh4qsB",
+      "address": "7ttCpcsDbhPpp6kJ3cUL59fLuB8NFUgutsfTLopTCdX7",
+      "bump": 255
+    },
+    {
+      "mint": "86QMYXv3BaNJqoa48xr49u1pbiMhZzkiZ51HKv82qK1J",
+      "address": "KmqQYGdpzrdC8PijtTVic8VmLBZyE4eB21agnkSpMrT",
+      "bump": 255
+    },
+    {
+      "mint": "7pZqfUQbkq3oR9m2a2mH7kmBzcScHG38iK3EDyqAcN5Y",
+      "address": "TsZg98CNZqMcrUFz4dzGcafEnnQakzSM2hguqSKKNJm",
+      "bump": 255
+    },
+    {
+      "mint": "CmvLqDWJkkxyYeBDeStsog6AVsTPo6d7sDpmmqP1K6Jz",
+      "address": "4fo6HDrqrYbD2PJMwhd5fzq2RaQTmv3Ugpyrt3N12DP3",
+      "bump": 255
+    },
+    {
+      "mint": "DehWmAp1yqW3QuWmTYz9rj9UMXnqj32BjqdNHwBgZPXy",
+      "address": "8x2TNxXNfawp1Miei4phzz1QJ8ZSvME3bHNuCBoYHyv6",
+      "bump": 255
+    },
+    {
+      "mint": "Eeeu15MvPKxKxea5pJDv6iehQphbfKiYntoKgKxYw61L",
+      "address": "93JYDBcKGHoKp9gj4Ad26yPqWBMcQfut2RGrF9hHmH12",
+      "bump": 255
+    },
+    {
+      "mint": "5L7f8UT5qkeRKpgB3nVaTfcVCPguJdBTiK1yZSkKkLzp",
+      "address": "CYuj7xTQotLvctmz2F6jFuFXWLrsq9CUTKtoqrfSVdv8",
+      "bump": 254
+    },
+    {
+      "mint": "6rjbN7eZYs7osjmcDDDYCvNi4p1AaM8wwVgDwussX9qk",
+      "address": "7uMDAyz51QQudLJAKBriBSnvUGjC8ujqiZwDFu263utP",
+      "bump": 253
+    },
+    {
+      "mint": "BsqpxVbeB1JFoAE2jM7GHAPKbpd1gLXwGGUZF2S6EbQy",
+      "address": "5UdwjdFDzWi1hEwabZEktiUAfsNvLLDevP6Mbxs8x1Pb",
+      "bump": 255
+    },
+    {
+      "mint": "96vkzYRntH7fynLymkm5iS2R5WeeS4BcEBupTeTcpYfB",
+      "address": "HBf7pxqLWQUHkvHauQJHp15FwkQgJjMKih5gyEtVJ9xn",
+      "bump": 255
+    },
+    {
+      "mint": "3sF3Jz2bgd7pDGy5TJcbHeieaSNB1wgRZ3nDJ5EkzMSu",
+      "address": "GgFm279YbhkmM4ZmKXRuHw2ieLwy7sh3Q9dwiwxaYeXW",
+      "bump": 254
+    },
+    {
+      "mint": "F1SzwgokqkKxgyPaDzapkD2MD9YM3kRgsWB5FgPBtzoX",
+      "address": "5jpUtUa2DrPeVo9fA2VdEr1sA81Xq41QAP8meSJNvvCf",
+      "bump": 255
+    },
+    {
+      "mint": "GFuhGMxgggae4fFvUe3hRASsV7MFaGgPaZdVBMhW68Hb",
+      "address": "CVJf22MNEbpUci8DMhLhzAbiW4gb6j42QaX9coarY2e5",
+      "bump": 255
+    },
+    {
+      "mint": "qvZ2wcKd5Dzb1CQ3weQKNHPFd2xbqfN1s52A49QhYFi",
+      "address": "7CQjejSZEDs81W3Gen3Fx8gjZGpAxBGwCdisycvRAuYE",
+      "bump": 254
+    },
+    {
+      "mint": "Cc6BDuiNNDA426gx4VgdJi6a8crJzUJCpwPnRit2UpEr",
+      "address": "5yEPgRHHNHoxdJWMbwie4eTo3UetFRKdzPh1M45o3mPz",
+      "bump": 254
+    },
+    {
+      "mint": "EjNUjE6rzJXEdYzaosYSpBMkSZpcTgw9ztfciTe7Hnvp",
+      "address": "3rrPNRtkM7kCiNZQvqRNmU2kEHosBku4LvHE5VSstkzq",
+      "bump": 254
+    },
+    {
+      "mint": "ETbATFDyG9SUHUufKWPyS6bPCJugQe6wcEDRkUCGMimS",
+      "address": "6Nne2z42PtiRuvbdj6U116jLkSE2Umoek9xnecx3icjL",
+      "bump": 254
+    },
+    {
+      "mint": "EHDRbUaPXfWFF62TQePDMwCVDLA9DeoddS9qcZEFp37p",
+      "address": "3qrtumSQuKPYHqujjK6uGThwRLQJr7b9sg79QzKCii9K",
+      "bump": 255
+    },
+    {
+      "mint": "BQ3S5PwZqQ1Quh2cDYXGUm3MAGQroyfmabDRWFNt3gCi",
+      "address": "7PJSAwNVqtBuouocAoaK5oBioemEPEtxC1UJfbM8yb4h",
+      "bump": 254
+    },
+    {
+      "mint": "8hDPp8EHV72aedTLpg6g8zs5jM1JRHXpkbgX3Ref8Asg",
+      "address": "Ad7LJk7udNA71F7SLEMusx8ctMRCzDYhWiBqxuiKPogE",
+      "bump": 255
+    },
+    {
+      "mint": "5caPVhb9s9zD88nUm4icnd168D1itkdqo5D5j2YeNhof",
+      "address": "5At5jKRABdXGaDVrmLPjukveLFoar1FbvDqivjSsujVo",
+      "bump": 255
+    },
+    {
+      "mint": "DsBPpbK3wE3Cpzx1wFGk7CcKD28kTpZZkscdBmCx7gd8",
+      "address": "4odBDnnAoj7cVACTT9pHVADSGaQSVPf3wybYBadW9ENo",
+      "bump": 255
+    },
+    {
+      "mint": "FrLDnPiqi7fNVhxefA3qLJgpmGkX8Ap35R3ZV4ceCHJM",
+      "address": "EZZqYtbxgxaypjSpGByz5vn1pxho2bXx3wEvrgP76DAX",
+      "bump": 255
+    },
+    {
+      "mint": "72dBjVpnsUM3dQxfMrRCYAFZ67vhg6Djn2vvHeQc5k9j",
+      "address": "6bg8PgYj8eefUyzis3zvmftFrvY1nMwgzkb2MR5EtRNB",
+      "bump": 255
+    },
+    {
+      "mint": "Hwh1DzApnvc6eBJiGENFEmGW3decoJ7d1hdDwhgnkn5N",
+      "address": "GbzafTUNKxnJz8hNrhWxjGX2v3YkDA661AtcTaDioEZT",
+      "bump": 254
+    },
+    {
+      "mint": "G7iKwTYLSQW4rRGRuRLtTbeRx37Dm8nHyNV66QPGcZVh",
+      "address": "2UKHUxa3uhkbz46eoixvUgMeebRdUezqkVjfSUqrQ7fu",
+      "bump": 254
+    },
+    {
+      "mint": "4cGNWczj8ZoYryr4tHcBkDeY4pkzrgs1DFajPcZRZL4V",
+      "address": "DFSbN2f3DqUZ44bUAwYePFsyzU5RzTBExvfQGkKMshX9",
+      "bump": 252
+    },
+    {
+      "mint": "BwquzaYH7GoPyoByrKyJ3xKfA5Kpmsk5FdF3Rqp5zyiQ",
+      "address": "GdR2ZCqPVp9Z5ktATtjozzipqfi8LBXhDQHtjjZx3PkN",
+      "bump": 254
+    },
+    {
+      "mint": "Aq4Dh19QDXC8QJ8nuBJR3rT7zy2H8hXgjqBh3Jn5v3d3",
+      "address": "GTgaHgnrhZhSR3LfuRFCYn4869q49JxM4HhjSGSaJt3G",
+      "bump": 255
+    },
+    {
+      "mint": "EEPMDSPQXuyko9fLKFMgkN55pmh7jnb7hRTivRjBLxvf",
+      "address": "FB7S9K1rsThTLpLTPCaUymdwkAUVF9qyen8bBLatuHp2",
+      "bump": 254
+    },
+    {
+      "mint": "7rGwtRQ5RXm4XZhzdfcr57TSFQAP14kBsACPSap5pM6v",
+      "address": "6SjrUt3gskG2VMBJ3HXqKvYF4ReSXhT1zm1NXbQu9Qxi",
+      "bump": 255
+    },
+    {
+      "mint": "B8aWKBCKqUS5EhmYAzhWSNDdneMGaFn1wqmzTk2gSmsj",
+      "address": "GPai4JsHJfv8HrTZFz5u8Q433QjEu24xwfbeKHPx5mPL",
+      "bump": 255
+    },
+    {
+      "mint": "9rByrEKRXxNGSTazPK1v9ucvCnURuSDGPvAyvoVQKq4Q",
+      "address": "HJscGvqAGthYEfMbQxGnQzrBw4TtP6nYSJpPYwL1J6Yx",
+      "bump": 254
+    },
+    {
+      "mint": "J2gLQzYQ7JVZwCs6TRZ23gxjyguLwH4QN6tNW2YeAQYp",
+      "address": "AAMLa12G4aJiY6t9CXivvbHMrWbTSGyw13NYxvpFUeEt",
+      "bump": 255
+    },
+    {
+      "mint": "BWAxUtzvTB51Rik2ZJrTQ2mGa7aYMdXQThKENtEkvHms",
+      "address": "H7x11CwKwpe7jxutAGAEshPgWn85y1zDjkd4ycLKZ3mV",
+      "bump": 254
+    },
+    {
+      "mint": "8dSjKrvwtHSgYbTLEAsFGfWfCdKEKBTyYRs2o55bkieR",
+      "address": "8zQLpEwf11QBm9JQF2XcJK9x8KyzXaajiqJtPLAvFiRN",
+      "bump": 255
+    },
+    {
+      "mint": "2zEQcq5Qgi9hXYLUL7brjdvXiKoip6kYxm8FqnFucEQi",
+      "address": "5Y4pbKPiddmahEBfcTqNJmqYc43hUg1FKCYyQsTDMix5",
+      "bump": 254
+    },
+    {
+      "mint": "3gLCErWoaAGBPs3WJhiMEK7tjFJ1svSgGoq6q3PowEAU",
+      "address": "G9DNjKXw59B69UFjuWM6R2sVmDCVd1ae8QXajSRhtBcZ",
+      "bump": 255
+    },
+    {
+      "mint": "CE6cJUSioTQRR9SLQU3hJQfyRCK1aYpxA82kNDa4pvtQ",
+      "address": "D6vBPfXPezdgEeAXwXoKZeD9ZJFmHyzv9D3YP4swuckT",
+      "bump": 255
+    },
+    {
+      "mint": "73uDEkmgNRrNEFe7K1r1PcQbGRjcNw4F1f59YsiSi6Uu",
+      "address": "HTKjBKYYxb3vALjmTueTYtPYFjSe69XDiCTV2xWcRkcd",
+      "bump": 254
+    },
+    {
+      "mint": "75MjFnfXfKhTGVaGuH3mHSDnJDGEZszfiet3zFDpXQGp",
+      "address": "4Fp3k9n5F5dLDbFPD8zp7xMQFngKakxv4knEYnBB6PzZ",
+      "bump": 252
+    },
+    {
+      "mint": "Bs8FxY7LPTbYubCVQctb1smGgqbmDzovqdnhVfJFtsnb",
+      "address": "8sCWHiFSPgjxjJUcEAAppNsnXB3hXa4QcTKpChCpxoZQ",
+      "bump": 254
+    },
+    {
+      "mint": "HHGyrqEXBozp5A4yNXd5x4sekT2nCM45FAFE7DaKdteC",
+      "address": "ExofWod3L7j21cACMEdCnvuCTGEPUR5i9oxJuBt8D773",
+      "bump": 255
+    },
+    {
+      "mint": "FxhSgtctgiLvHWryZmhHxFLztdfZ6oHzSo4weheZKZDA",
+      "address": "DvwQttZvKKNcYj2jtT4yUJFjL8jwkW4QSS3vX6CFLSxm",
+      "bump": 251
+    },
+    {
+      "mint": "ANqG6Bfiy9vNeiUCHiKq5REu6RzsEjXLtZGNuBrVuBBD",
+      "address": "2RwVr5PQLH6Xd7BNQbbooLCMhuuyQ6jU9e95AuPM3kty",
+      "bump": 255
+    },
+    {
+      "mint": "AxcGh4vtudT6cqtriTubEvc3NYg2FbJNxwKepx5urMyj",
+      "address": "AbdKqQVMFC7BKV9xytgUXWyV7ELdHZiqUhos9ubZjgNd",
+      "bump": 254
+    },
+    {
+      "mint": "6jKZY2cFhQnfbZKjzF6JQqZNdTTpU1bBAmE4RfVM8Ujj",
+      "address": "AXBhFi9CBMnqgHiCtRPu66MAd7FYFMuhmAcPbe3VjbsD",
+      "bump": 255
+    },
+    {
+      "mint": "6xmFfhxCeNHknwnUCA8ysRdNhmfP7eJJUnkxAzS2bD1o",
+      "address": "HgDE5LZTSqeBmVHdyvzsdm1zZJNQd5v6HC1o8wTM7eSA",
+      "bump": 254
+    },
+    {
+      "mint": "7mv2ZAgG4pjge3shq7Ue3LKmmDBxGu88V7LLQLab7184",
+      "address": "Ew8Loun1rH7wzWjjSoCvj3w6QyUxYBpUtKMezVJGGZq7",
+      "bump": 255
+    },
+    {
+      "mint": "AUjMQPW2kViUFHTfHLGmiPKWZdebsfTB4Q6MdER3Sqgb",
+      "address": "EtiS6MG4Ae31VFnTq9QCPxJNzoLoeUKurWyEydjDzhwq",
+      "bump": 254
+    },
+    {
+      "mint": "72DH9npfy81iJFqDVnDzoFFMret2bWq3aMCygL4zqdht",
+      "address": "5TRa6CiU5DzDUgZtFzdZScseyqbh9k9UanYrGRCm3PJ4",
+      "bump": 255
+    },
+    {
+      "mint": "2P4rWfNrUxaT2hDwhZiBxQa598RKJZ795hTbpDQQpLZP",
+      "address": "FFSHT3hXSz91pK1kvzRP8JzQ8ZnYeYMi1J9Gn25RnVDD",
+      "bump": 250
+    },
+    {
+      "mint": "6GbbShEa28naRQsCWtwXngynAXkuuzELHR19qitidvKi",
+      "address": "9a3kQ933McuDa6T6MX5iX6U28fJ8Sycy4JhY1MK7LhkS",
+      "bump": 255
+    },
+    {
+      "mint": "EJRov6tZQ8mpN8VqayABekdFMFXV9Lfwt5RrVo25WNC6",
+      "address": "HcKJQ59ToM4srfHPFmFzqMYNnG79Df6fDKJB7u5vyqnF",
+      "bump": 255
+    },
+    {
+      "mint": "Axo9cnrtF2LmhGqZShM8w5GWCDMjdP8Rd8gmRNKUUWcU",
+      "address": "4Emn245imudFqHbwtnCgVroMc8WfDJH482U2wJCHxLE6",
+      "bump": 254
+    },
+    {
+      "mint": "9y6E4VED5QinfAEmxnXthkBZ51pjz1nwARzkuEeoRhS",
+      "address": "GpHW1Ha2UviDZH8RfKhWQFvoFTaPJoVnjejkSjBuZ1DG",
+      "bump": 255
+    },
+    {
+      "mint": "3U4VWjXuGCrbEgvd7sHkAwR1ThVoyxMEKjGLrUz3RBog",
+      "address": "8hT9dUZfiXsbcBZjBqEmRRoinHXBvLR7h3Vmaeap1ju",
+      "bump": 254
+    },
+    {
+      "mint": "GTve6AKthRxidQWkVtG68UnvRzBymxp9FB13ZE8vFpuG",
+      "address": "9ZU6BwwySX2WBJcuPAPspR6CkQDw79Ret9ykrDUEfTNZ",
+      "bump": 255
+    },
+    {
+      "mint": "C4FbgnjZ1BkcWncwFgTrjdevVieKoTytXTLnHP8c8tfr",
+      "address": "DJk6ueewDtY6SYFiTjeshufg59FmHJWyzTfQDsgXFZuZ",
+      "bump": 255
+    },
+    {
+      "mint": "6LjAz1yNwXd66CMvaKrLxmcedD6cK86SPrGYPJ2GhsXJ",
+      "address": "Fbt6Z8wamJpeMKynkRtUd64dSyv1Upxh99rj5zeTH13F",
+      "bump": 253
+    },
+    {
+      "mint": "BMnLBWV3gPEdpX5G1vud5xDsuAQduE7dL2PMGGvnj8t3",
+      "address": "56jvvJgBmzn9dewgzkVQVEgCvQuRiAXpC7JWBeXMRCyP",
+      "bump": 253
+    },
+    {
+      "mint": "8VVPTrrrALGxy91Scrqrm7PAKg7MeP74wmsqgBLhGRHV",
+      "address": "66vMtMAfC4acZ1s5NUH23pRXCU4RBATxdRQHxjnGjiE3",
+      "bump": 255
+    },
+    {
+      "mint": "65bJNDrJJtH9F49WKCazAp7jBuKWfJTSUKCwM2prKFFz",
+      "address": "EvQB5XpUH7fqqVJKq56cLnac3qnsprsN3XJaHqAE1CET",
+      "bump": 254
+    },
+    {
+      "mint": "J8T9T64RymrywxiMq59t1E6X45wpMBkfswUHRsRp1U3e",
+      "address": "4WwgtLTXxnatC85Py6SLepRXThbCKJU4Cfds9nX9vndW",
+      "bump": 255
+    },
+    {
+      "mint": "2GoKwGb8uXtt3stapUwubB8UCA3AmJtyp6GbXELH8fsu",
+      "address": "FPJ9LhDAiC53jgaeed34ZmrD6wmuYK7f12Ma4jAWZGw8",
+      "bump": 254
+    },
+    {
+      "mint": "CKd2GcCQQso9dB8eHpG2zzBjekMThWvKkh6e1bUAG9Qe",
+      "address": "2Lcq4Qz242sgzryXCgPnziaCRq32Qd8jRi2Ud5zfSzA3",
+      "bump": 255
+    },
+    {
+      "mint": "CVZjs42FwSEftRCgE77c2hLA1QV1N6mKBRNvEE956GVS",
+      "address": "7GS6cubTtmgou8ZBwYE8XYK6b4eDuyoCWPEsXYEzmFa9",
+      "bump": 251
+    },
+    {
+      "mint": "AJCEkVdXdnJDdxgbjPseDg2SEcV68LLWUPNuy9EEbBkU",
+      "address": "FBgJye7YiMSCrHnYJVVo9jtHb6JX4qUPKBsJ7Jq4VUv2",
+      "bump": 255
+    }
+  ],
+  "points": [
+    {
+      "hex": "7f915605956da2e8beb1453598ebd23ee7d53bb48980674dbe73fb75d7c4b506",
+      "isPoint": false
+    },
+    {
+      "hex": "a88fc59816287d0f6b3c7b017014ea7acbba0780f4752fc7a078ff00e02f312c",
+      "isPoint": true
+    },
+    {
+      "hex": "3e7f4f0d1dd80301f6767fb36b979637121f89113a1d7934f94ce438d7e83ad1",
+      "isPoint": false
+    },
+    {
+      "hex": "00a8181f9e2777d0b5d52f33f98a866faf5b9fac94394b955cf480315b1fbf76",
+      "isPoint": false
+    },
+    {
+      "hex": "7a3f5dbc6c4ef95b0b035907028aed3d2a6f4ef0076aad08d18c4c238f2a91cb",
+      "isPoint": true
+    },
+    {
+      "hex": "b19aaaad2f52ba1987942011d4710219d364c53ec1b1cc7c53c11830b06093d3",
+      "isPoint": true
+    },
+    {
+      "hex": "e0729749b16c239300014d7d65dbc57ec5d392a8abd258574e36b1ecc79f8bc8",
+      "isPoint": true
+    },
+    {
+      "hex": "868d21cf7a2a91220f855e8de0c09f18dca416c195d895dbbf6da69d86595137",
+      "isPoint": false
+    },
+    {
+      "hex": "569ee2f202400117203192ecf64fb7c2fabe3d8ce32443c96a64ef345e194e21",
+      "isPoint": true
+    },
+    {
+      "hex": "04324ae6bbc27ffcfaf2083e41547fb87b1d520e2a3f455689388cb1489fa234",
+      "isPoint": false
+    },
+    {
+      "hex": "39a2d025fde4c05160a9abb5003e5cb1655a2ba48afbc4acf392c13066d9ac6f",
+      "isPoint": false
+    },
+    {
+      "hex": "b36f7dc10dcd7ce6e3c01df8a61d52a7630a67a320c70d5c744734ae0d604c10",
+      "isPoint": false
+    },
+    {
+      "hex": "93196bef487de4e49e7332e4e08cb48cc10551f06e42e43de2a52a1e732cd731",
+      "isPoint": true
+    },
+    {
+      "hex": "c94461387fbcda73d20de89fa38b61f5780bbce11edca6f931fb873b79028616",
+      "isPoint": false
+    },
+    {
+      "hex": "6b84dac7664991ad952f8ee64248d7cd22c8467205daad93e74aec498d1e0e52",
+      "isPoint": false
+    },
+    {
+      "hex": "7c887f58511b43511ae4ecd49578554c369a1abff342f037976badbe9276c354",
+      "isPoint": false
+    },
+    {
+      "hex": "fa7dae5b95dbead5d3d216a2b06f0303f4c187c9163d433fce2aeebebf00cdeb",
+      "isPoint": true
+    },
+    {
+      "hex": "adb1e9d7ebbb3378fd95cf28c3b81dccdac3bd9f3a7103c0045fc6e55f8a4c9f",
+      "isPoint": false
+    },
+    {
+      "hex": "b5f6789753626905f6fca4f946ed69c0c775c8e8897fc2fdb7cccd04288fb8a5",
+      "isPoint": true
+    },
+    {
+      "hex": "9f0810d2352f979f28c574af214c7ee2213441c058948154f3f6ccf307c04ec4",
+      "isPoint": true
+    },
+    {
+      "hex": "f09ef9803c643730c32104254bbb245f4e8af274763f2249f127bef6494b196f",
+      "isPoint": false
+    },
+    {
+      "hex": "f6b8e7554c79c523cb8dc0c757c12b4f60d71170768f9d0abf69b878d68f1336",
+      "isPoint": false
+    },
+    {
+      "hex": "5f8a39f3b9c41c5c70dea6e00883d409c5bbf6c63b03e2b7ed6300bb9c8e63a7",
+      "isPoint": true
+    },
+    {
+      "hex": "888875e5c5c14dab91b5571bb002c768131b1436e808e5c50a31d10a8fd61a94",
+      "isPoint": false
+    },
+    {
+      "hex": "d2efbc87e0c1231dc20a1d6610935a9cc8a0cabb75f89a27aa1f61c4aab9bb96",
+      "isPoint": false
+    },
+    {
+      "hex": "d5fb94fee28b27d9bcad8c98a1d123c76075db6cddf544458e9f8a076cac8043",
+      "isPoint": false
+    },
+    {
+      "hex": "c4af42d510620eecd1f45f1e058f1d9bb0e07f165fb6cc28bf7c866062748e7d",
+      "isPoint": false
+    },
+    {
+      "hex": "67845cfc7ec2f7d31fde1b48ae1e987e131cf845d0c254fa41ec1eb1f979e429",
+      "isPoint": false
+    },
+    {
+      "hex": "229f1102e30f291b1ce12239d233aee22edb6b0b725ee24709a53690a2595a55",
+      "isPoint": true
+    },
+    {
+      "hex": "ee8ea54e5af1899906f534d7797e926a31b36432a48e3ed7f39aeee11eeba501",
+      "isPoint": true
+    },
+    {
+      "hex": "e62c9fa159014ed007e30494ae219f96ce7b1247d149440cf4617bf0b9946dcb",
+      "isPoint": false
+    },
+    {
+      "hex": "ca723065d1bc1acec0cde0c36993c06a3107b7e9eec958262aaa4aacf06a4d4e",
+      "isPoint": true
+    },
+    {
+      "hex": "9849cb3772bb9a217107140fd2e526d4d88f8b4403724aec42c1afe751b62bfc",
+      "isPoint": true
+    },
+    {
+      "hex": "edb5099e3fbc722b2c21f853a3729808d10222f6c9ba2b07b1778c7949723049",
+      "isPoint": false
+    },
+    {
+      "hex": "324537bb6789b3530a443edb149b68074c82f628151c812250defea66e4fec5d",
+      "isPoint": false
+    },
+    {
+      "hex": "efe3e729ce57817ca5048e06c26e81833052409a10bd718d84ddde3331b4016d",
+      "isPoint": true
+    },
+    {
+      "hex": "ea50848167e49fd5f536b28c5bd2d3615758d873f150a9d8d38b7d3ba1df6451",
+      "isPoint": false
+    },
+    {
+      "hex": "846d02c7783f9c0b8c10c5644bba03b4abd236622155487669e77b0e5dd14f45",
+      "isPoint": false
+    },
+    {
+      "hex": "3600fa3864ff28c0d86e11407d1bdd7aa5157ed951d95d7a6c74508fc48e74ff",
+      "isPoint": true
+    },
+    {
+      "hex": "0b1a7747ebb0e0a14b22d415b8542fc336183192cbf9bf0b2a1a5cf283dc3ef3",
+      "isPoint": false
+    },
+    {
+      "hex": "ac571f39c2fd3c6565856888c699b15d0e5d95703f60eb1c74cffb5193127ff4",
+      "isPoint": false
+    },
+    {
+      "hex": "6a2162fe2424d72d55e8fe33c17e003a203b822d3d98ec2b890a583fc9045653",
+      "isPoint": true
+    },
+    {
+      "hex": "5563011473470809a6b29e005bb65e12589d403a63cc9248d3a08f63c1df8375",
+      "isPoint": true
+    },
+    {
+      "hex": "019e3c076a08e63568c7e8992565b2b3e6c5e477e2fd3fe11869fc5a130e139a",
+      "isPoint": false
+    },
+    {
+      "hex": "0fa2efdeb003daa7defd585ee841193092e6269f887bfeaeb94beaf469ab322c",
+      "isPoint": true
+    },
+    {
+      "hex": "2842a9e059919f0f4b3bbffacb798b193ef1cab538509b07cb515238788a889a",
+      "isPoint": true
+    },
+    {
+      "hex": "f3e24b1864a7d789a7cb3e5cc2a2974e442977b1fbb225a2da335a95d9ee88c8",
+      "isPoint": false
+    },
+    {
+      "hex": "1e209c2e7c26369b0a3de0deaa2fb581c826e5758e6b7ce1e3c62ebece425bed",
+      "isPoint": true
+    },
+    {
+      "hex": "1920f130fb927cbae465c884ee83b2355eec847842e67c801308ce251d3d0894",
+      "isPoint": false
+    },
+    {
+      "hex": "fc2df976f50d5022f2da734f88a5417022b0ff04cd75ebfe3e91a3cbe3414d40",
+      "isPoint": false
+    },
+    {
+      "hex": "779960d69f9b07e5697d762647f2a8b5ff7b353e882348d5a100a13141e25c45",
+      "isPoint": false
+    },
+    {
+      "hex": "c13010fdfcd66e4669632d1a2871e90360114d9f1871094d7f6fb4844f96b379",
+      "isPoint": false
+    },
+    {
+      "hex": "d97999b0acba63bacf9c17341888b5ec180df6ba81364a3b56efc3b1112ed9e1",
+      "isPoint": true
+    },
+    {
+      "hex": "c6254cd0964ec0e726cdf2c6b63afa3c43212e34cd874890890ce895e25032fc",
+      "isPoint": false
+    },
+    {
+      "hex": "b964514553638ccfef263c2fbf0a4e1fc8bc3fa010ca3a635fa4026d71be5248",
+      "isPoint": true
+    },
+    {
+      "hex": "837ef98c71d4fda58791e86fd2b67dd99b2bccbd6c197419ca8165bb71a29f18",
+      "isPoint": false
+    },
+    {
+      "hex": "47cc9c0360546365fa470b0a4c2d00a4bf568ae9a4e770b463550d3f60d53fdc",
+      "isPoint": false
+    },
+    {
+      "hex": "708d4b62792b921c056a47bcfdd27edb25a149f9f56f58e355314a0ff39be83e",
+      "isPoint": true
+    },
+    {
+      "hex": "fecb2f72df7dd4d702474892fea05646b3ffd306bdba501b446d4c9b6d550b96",
+      "isPoint": false
+    },
+    {
+      "hex": "3bb66761c0c6b78c1c32caf9f38ea09cd261f5690f7f64301411e5a7a4a0f976",
+      "isPoint": true
+    },
+    {
+      "hex": "5a974cdea7ee0710f0b5e951fdfd7a8f7cfaa9d0a24556ce264c356ecf91c09e",
+      "isPoint": true
+    },
+    {
+      "hex": "d36cbdfd8d39ff7bf298e459ba01b49332e0981383ebd348cf0f982a04087662",
+      "isPoint": false
+    },
+    {
+      "hex": "f4972d8ec064f3f923fe41764dcd4f174436ad0fe651e3ccd794b64fc906c449",
+      "isPoint": false
+    },
+    {
+      "hex": "3877f8468857c3d507f5bcaabab746732fb89513ea1f828700669f0dee585e85",
+      "isPoint": false
+    },
+    {
+      "hex": "8afa181f1efcf051949b3b59ac5c93b27fe7de1425d9b6e145aa8d202e63a22e",
+      "isPoint": false
+    },
+    {
+      "hex": "e05161b344aa713ac717373301a886901ba9f37deb9fbd7f130d3f75a5f7c0f4",
+      "isPoint": true
+    },
+    {
+      "hex": "cf63e3f2fa04128294574affb61da36e4fa05b687559a456fab9dc5417033042",
+      "isPoint": false
+    },
+    {
+      "hex": "b92400c2cfdbdc7a96374f06da6b9c9988cd6d1a07799894e4b51b7073b03b55",
+      "isPoint": false
+    },
+    {
+      "hex": "29d492d7b4513ef5a316cdf4ddb1ee5bfbab5b5aa762007d7dfb16b2cc86a22f",
+      "isPoint": false
+    },
+    {
+      "hex": "6983d34d0304b03407850900098530bf7fbddbb80979596b4dcd9a1794ad19a9",
+      "isPoint": false
+    },
+    {
+      "hex": "5b8851286c46d5f564fdde87480c4f796a0a1b01a49604850dc73b31f3061e2f",
+      "isPoint": false
+    },
+    {
+      "hex": "64af531bdb22af67fd92200013303f84342a25c580b85ea4e9b796c35addafb8",
+      "isPoint": false
+    },
+    {
+      "hex": "35d08d42a049ab860f1610f3485fb20f4bd6d8f9e03c54d70c94a6e5f7307b17",
+      "isPoint": false
+    },
+    {
+      "hex": "c8b91a85c050d092c6ec3a04585a9fb83d0d19fe11471b2912fa9ed91574a65b",
+      "isPoint": false
+    },
+    {
+      "hex": "3160a4fa18a2dcd653363619d4882f72cd2245571f06af0647b096e45f79bd21",
+      "isPoint": false
+    },
+    {
+      "hex": "8631ba590f7fe004785acd8e88e2163d9bc4cb4b05b2a3f9eeab97ca97ac74f3",
+      "isPoint": false
+    },
+    {
+      "hex": "caf389933240f0c56b14df3a162d2b63c181dd2c6b8bb484622bb0b4088886b2",
+      "isPoint": false
+    },
+    {
+      "hex": "af510c4b370825c1c4fd1bd0cf38707c3bd38b87e1e5df94c47835016e31ee57",
+      "isPoint": false
+    },
+    {
+      "hex": "2c057acc38435a8dce9e06b50e43999aaf1fb59033469e98a0b0d42d619fcbf1",
+      "isPoint": false
+    },
+    {
+      "hex": "1d9852cc5ed98a8f268fe4ff5bc5402722350ed8f29f77b57c2b4fb3a692b247",
+      "isPoint": true
+    },
+    {
+      "hex": "fb96f5943d5db6493b7595871b5acf1fe396041c25605cc001a68b69a0c6ddc7",
+      "isPoint": false
+    },
+    {
+      "hex": "ffe671554e23b4a4bf8cbe6911e71320947cca3c972470d2cfa0bc1102fd9a39",
+      "isPoint": false
+    },
+    {
+      "hex": "a081ba7da5c4d6bbe4501811ffba3129370c2b240a08a45cad75e616bafeaab6",
+      "isPoint": true
+    },
+    {
+      "hex": "0d5961e71e0fcfb7607f9f3a6015d7d5f7a931595159e8af059941c11008c0ff",
+      "isPoint": false
+    },
+    {
+      "hex": "e16aa07e8a6ea236a1ff5902cfa2b30be7f612c372e79fb1396ee259431c9aac",
+      "isPoint": false
+    },
+    {
+      "hex": "77d0f375fae556fd2b3f3cb65f3d96f4e3df14e1885fd9b2056ebf300f5ea7f6",
+      "isPoint": true
+    },
+    {
+      "hex": "374aa4ae08f0fcef8fb0e479a7f232715aa4b31ebd7e7be589dc01fa0c9f18c8",
+      "isPoint": false
+    },
+    {
+      "hex": "e5ef39a4acb529ac94141e7d92098c25ee045d88525bc7a3cf005b3f7856587f",
+      "isPoint": true
+    },
+    {
+      "hex": "941ad137e882b09bf8e62b1715b95308cabdffe35a2c08552d5cf51a2160419a",
+      "isPoint": true
+    },
+    {
+      "hex": "326b272c920dc6ec82e00d09389d53662efa2c286f294deac491861fcb482cf0",
+      "isPoint": true
+    },
+    {
+      "hex": "bbc80f84059672d1473e94941446190b4362722fce0205db67d573f460994fef",
+      "isPoint": false
+    },
+    {
+      "hex": "6c89c7bed9b0b502480e0462ab08d9c69e6be46a2010deba3fdc7d88a713ffca",
+      "isPoint": true
+    },
+    {
+      "hex": "bb6c486584437a4eb84c6e7a40ea5071c103942c654a4174a0ebafe861cb2e04",
+      "isPoint": false
+    },
+    {
+      "hex": "09af70b96133fdfe181deda903e0728456cbeedb40780987f3e9820ee4b9ba9f",
+      "isPoint": true
+    },
+    {
+      "hex": "0672fe06a1e1396d64d878666e03391a44c71bd59c99303862a6368efa18efd6",
+      "isPoint": true
+    },
+    {
+      "hex": "30bcb764a0c15a56d3da7c0e1d36fc309c211bf530f82fc1613204627e3cd4a8",
+      "isPoint": true
+    },
+    {
+      "hex": "5493fe1a8c097eaffee202352c4741f32edda36dbfe0344e16d92a1b7ea85700",
+      "isPoint": true
+    },
+    {
+      "hex": "e12a4da63501dc66b4ea1bab95f7e5fd97e93f70cc3a15951a1d349776579aae",
+      "isPoint": false
+    },
+    {
+      "hex": "4307a9be6c8405ca6cfa8f1818136503fbc4fa0cd1cde1dda7e138340848cd5e",
+      "isPoint": true
+    },
+    {
+      "hex": "47286c7001631c66390001387294bf3d42f1e2fd11f3df346f3f2a5483b0c5d8",
+      "isPoint": true
+    },
+    {
+      "hex": "0ba54495c5acdc0c50daae5391d2f3412697a0a99ea08c7acd0565ad4a276852",
+      "isPoint": true
+    },
+    {
+      "hex": "cf48ad5eaf88f2ac0d20e0070ce3c5fc803ce82a75d30449bd3c9344e4f84757",
+      "isPoint": true
+    },
+    {
+      "hex": "9ec1db0383c2adae2cacfe93691fd2aea3f3814ed6ce52bb829cee7e7b6819bc",
+      "isPoint": false
+    },
+    {
+      "hex": "7f751fc81079a90da152a5cada7789138eb7c31ff70f00621356416360a20e21",
+      "isPoint": true
+    },
+    {
+      "hex": "625e0392a107a577f9ab0796835d0646fef21ba6721c01bb14405760532000d9",
+      "isPoint": false
+    },
+    {
+      "hex": "10a672fe703998612eb3f27c66ca80de93c3d7d3bf4b643e8b0767d3a312e379",
+      "isPoint": true
+    },
+    {
+      "hex": "95dbd6965be4c2a97fd8966eea9019fe8084905b3d2905ad2193693c143d64f0",
+      "isPoint": false
+    },
+    {
+      "hex": "63cea79997fbb1d160d2a7b18d653861d4f76df842f9b9d05103812a74c4bd66",
+      "isPoint": true
+    },
+    {
+      "hex": "b43d8a3e20f1895d4c04a72361274824c6c07c795b9b52bef5d7d0c32c159efb",
+      "isPoint": true
+    },
+    {
+      "hex": "7eb0459547ec00faf858bd21d8290d3c30d516de6c711a7b2e6a726d1ea84c69",
+      "isPoint": false
+    },
+    {
+      "hex": "c68ddcb2b01ca0b6d993f6e2e06faddfc409fe10a7fc5a04fb407394df90a709",
+      "isPoint": true
+    },
+    {
+      "hex": "41d8dfa87e4dad495c80c22f60afa805636f42c95dda1fa2e8d056ca6745ceae",
+      "isPoint": true
+    },
+    {
+      "hex": "ad8a8f9135d7ac83f02e44dd9522793d258abdad1d7ca87fa73dd708ad3ba5e4",
+      "isPoint": true
+    },
+    {
+      "hex": "32bc0d1d5c6fe9c7c698219df4810866aad1627210b4f75a557f50dca755f650",
+      "isPoint": false
+    },
+    {
+      "hex": "4df0cd9712757cce5b9c9e07db90a107a6da921ca562576ba7a16b6e515035f1",
+      "isPoint": false
+    },
+    {
+      "hex": "53e5d126caaa8bbf63dc72167b7c845319a64b5d2768c2e5b210c01f51e95703",
+      "isPoint": true
+    },
+    {
+      "hex": "596b64ba6b4f82e3a38afb52eed3c0885d5b2fabc8625205c9747ce147e30cc3",
+      "isPoint": true
+    },
+    {
+      "hex": "2af830d4cf25e5ef3882f45089ac85988fec2df601a9d862923770865cbac958",
+      "isPoint": true
+    },
+    {
+      "hex": "d6062706822aa92410164772cc0fc106f44c6c76d0c81aa18110703da8855c40",
+      "isPoint": false
+    },
+    {
+      "hex": "3e65f491a91d1257f9937f7dea21fcdd38dacbb629fedfc8f705501b7aa55a8f",
+      "isPoint": true
+    },
+    {
+      "hex": "209fa3978dd1dd87dafec159a3676f64cf326b05d3ae5ee955a6f151f3d8bd26",
+      "isPoint": false
+    },
+    {
+      "hex": "12d3d2cd97a3e88ed6a4cb60df0ea12ed816aa53948d47eb0556f6b432b34f7a",
+      "isPoint": false
+    },
+    {
+      "hex": "e5894008a3a27e1fedf232554774757956b28a3a34c9b4449946f0592d2b7778",
+      "isPoint": true
+    },
+    {
+      "hex": "e696d94b745faa4e5d3b51f6672f64457ac02cf406d7b479b87936a28406009c",
+      "isPoint": true
+    },
+    {
+      "hex": "1d940c664c086405021de254bc9dfbca62ea238f6a68f3be668b429522d097d9",
+      "isPoint": true
+    },
+    {
+      "hex": "1cd2a419cf232227db2acbe85c320d9778cd5aaf60ec19400dc5af990be85b61",
+      "isPoint": false
+    },
+    {
+      "hex": "cb622b82c4322956a8a2e805c3417e8731138236a01d1586895a8d8a29c906d1",
+      "isPoint": true
+    },
+    {
+      "hex": "ad164d4ad699cc7674f659d898d433cc8e18e2530b4a512e828a63b1eda7459b",
+      "isPoint": true
+    },
+    {
+      "hex": "d5b4a33faa4ef2fe06da06b0ad6d525c642ef7f8593811cc043126f4406d6ca4",
+      "isPoint": true
+    },
+    {
+      "hex": "30479713a779f3da7c84788da89cdb5f1bdf63c49f0013f095645c96eab6cdca",
+      "isPoint": false
+    },
+    {
+      "hex": "7373fd42b1711ed691892acc4fd635a493e11db1142e91aade86f71da23fd97a",
+      "isPoint": false
+    },
+    {
+      "hex": "82c000da8c9ab28af1ad27eeb9bea598c3b35d1e7b2eb52e2ad9967c4c44f5dd",
+      "isPoint": false
+    },
+    {
+      "hex": "b673a76a98a5d57bd2616b2dc6c6e17cdc8b5c0ddb67d4d71fee38b9cbc59e49",
+      "isPoint": true
+    },
+    {
+      "hex": "0e181d553cd3b4d9fbeefe16db824ff24e2e63b67412e6d1ef5dfd25b99a6d2f",
+      "isPoint": true
+    },
+    {
+      "hex": "cd71f45dd1dd6b20179d56ee2d6ee8cfcd15250eb50468526ddfd4dd34287d86",
+      "isPoint": false
+    },
+    {
+      "hex": "8712552843241b6013a9a3a3935e73b17d52ef58774c6f8e9f5b401a770954ed",
+      "isPoint": false
+    },
+    {
+      "hex": "d7c7cbd770c2bf18dff49d8b8393f99d32d759adff251492022abaa392f5188c",
+      "isPoint": true
+    },
+    {
+      "hex": "5bb38577b7b9e2648ae5db2401f37c95682736b5664b4b22865a5c59f8daf5eb",
+      "isPoint": true
+    },
+    {
+      "hex": "8bffe1f71d58e88aa886869c32d675c587b11d93c7a0207563082f1da4238a5e",
+      "isPoint": false
+    },
+    {
+      "hex": "f29441efca741e456a716c5df1731565cfa5376a8cfc06e9b5f0e9b7ab087c78",
+      "isPoint": false
+    },
+    {
+      "hex": "be1d63748a00d652df2d4596b623366c43ef6ec05837a2e46f1199ebb488202e",
+      "isPoint": true
+    },
+    {
+      "hex": "c5ccd716b39eec0c8743cb4d5d767b6fb4c67eda4d079b4f9bd854aff8b19b46",
+      "isPoint": true
+    },
+    {
+      "hex": "13ce8fd2347af13cd83152419f255393bfd85b535e8f756bf94d32725199c540",
+      "isPoint": true
+    },
+    {
+      "hex": "892b8c6a0e14ee9a2ae6fd5bc29f904c42e0a01acf31e1d3037399542d4b7089",
+      "isPoint": true
+    },
+    {
+      "hex": "23f70adef26dd67f96647932ae4821621c7c9b12f164e386d591c78c67a21364",
+      "isPoint": true
+    },
+    {
+      "hex": "5aad9c55f87e2cc7d52843468c0c755809c1c5ef2c691c3559fa5a11dae57526",
+      "isPoint": true
+    },
+    {
+      "hex": "ed1418078a3e969a6ec10466f6d94f935b5c554935a42888a4da24e864e8aaef",
+      "isPoint": false
+    },
+    {
+      "hex": "27817d5b3febcf8d62fc91b714f279336c0515e648e9f9ef72408fa98b4e0ad4",
+      "isPoint": false
+    },
+    {
+      "hex": "3b724c0503950e090311944931f67f8175d00fb414a39ae6c7145563325b2951",
+      "isPoint": true
+    },
+    {
+      "hex": "db66b9caba84ab0de8a2736f4c78c26eee05ad453d72de99f902a97b2d145d38",
+      "isPoint": false
+    },
+    {
+      "hex": "761f74d4a4d184a2fb4634b606439a9651594e842876c2e4cc2c16ee86e03bc5",
+      "isPoint": true
+    },
+    {
+      "hex": "6ebb4ca3e9fb019f5f69e01e8aa244716517a6219fff8f23f30f501ce525d32f",
+      "isPoint": true
+    },
+    {
+      "hex": "38c7ab1c2aefb0535ff72ae3a3799dac22af1298c3b53932df8a252772579288",
+      "isPoint": false
+    },
+    {
+      "hex": "0ec5653199be40a7d8cdbe88c472261201f4ea5ec05b4a0d20458d3391dc3404",
+      "isPoint": false
+    },
+    {
+      "hex": "8d79eab0e6c7e82049cca9905480ed9a68ecab765929527b4a13bb0d7650a550",
+      "isPoint": false
+    },
+    {
+      "hex": "b518118ed38d1b17a11032710e0d0f2ec473a9fe26b623943524d6443cdfbfbe",
+      "isPoint": false
+    },
+    {
+      "hex": "81903ca31d23c3634467602368bfe936e7958c11c96c4cf3becd23885ddfccf3",
+      "isPoint": true
+    },
+    {
+      "hex": "3a0c19c17c60027cadd31064a186b5aef191a8e9bab5ce6da13fbcc586db7047",
+      "isPoint": true
+    },
+    {
+      "hex": "dbd3c469455b41e8a59b5c1d38975e43157273bbe533b262b3caefad17068eee",
+      "isPoint": true
+    },
+    {
+      "hex": "4ebdb15bfe96510b3afcd43845076617624039d5a8ed6aea478a28a4cd8f92fd",
+      "isPoint": true
+    },
+    {
+      "hex": "ecbbc9790766a51afd5ca832f6138312e1b28ea45d96275ea585c572ec8b378b",
+      "isPoint": true
+    },
+    {
+      "hex": "e04a255c160cc62825212193beadb1c14ac5ba23f158ebddd1e197525250b7bc",
+      "isPoint": false
+    },
+    {
+      "hex": "7a0219a6933bd160b976b56f3a6dca9a7d2dfd1098ce89ef36014ac19972c7bf",
+      "isPoint": true
+    },
+    {
+      "hex": "9a545d9fd891b9b84613bdb56af6a0cbe034aaf669faa4cf6dfa87cb324d0db6",
+      "isPoint": true
+    },
+    {
+      "hex": "475ff17ee1169b7c973233b5426467ad3c9b483c7d33708f7efe094c15da560d",
+      "isPoint": false
+    },
+    {
+      "hex": "127577a93211605b459909ba1b28c033c7faf5cdc52bd487e967b037a980cdaf",
+      "isPoint": true
+    },
+    {
+      "hex": "64cd4b6efcb2d2790b36a8cbccce93bac98bd6ee037eaf487715490076fd7a12",
+      "isPoint": true
+    },
+    {
+      "hex": "09ec1ab85147fa5969e02841a7198bc2c4d34cc9e928e0e0d1343013760e8c6f",
+      "isPoint": false
+    },
+    {
+      "hex": "517892c3636e1a22fc2f5b1530dc07d1cca3a00c02b47d01d0be3bab6f259321",
+      "isPoint": false
+    },
+    {
+      "hex": "edf43c16c7318ef410a81707f9231d6ceef94abd52ba6470d94f79f9d7d95749",
+      "isPoint": true
+    },
+    {
+      "hex": "090e43bfaa9561920a6572860bfb9c2f984658af1010687ab338c6d4ce7d8284",
+      "isPoint": false
+    },
+    {
+      "hex": "fe99c82d8c1493c2e824c74d30f52e863041cfdd0eb3718bf957f763e384405f",
+      "isPoint": false
+    },
+    {
+      "hex": "f0d2e4177034eaa464985e96a3c0730cd92c141d60f2856ceb3a5113f5375a19",
+      "isPoint": false
+    },
+    {
+      "hex": "e8de829be70e21feb2e0f140c862a7d1ee086594750e95df79691f499ed003c2",
+      "isPoint": true
+    },
+    {
+      "hex": "7888cd11ab607e156f556563db0f49ad31cfbe4dd8a80e9b0f1996fc04e28ab4",
+      "isPoint": true
+    },
+    {
+      "hex": "252856f20f3dd9a6a3fa344c5748cee8b42ae3a8bd912a374fba5f4f4f8e4104",
+      "isPoint": false
+    },
+    {
+      "hex": "2b24d4599fe5cb2436c50302c3726eb496179fb27b28c8336dc02729bf05038e",
+      "isPoint": true
+    },
+    {
+      "hex": "abc0bb0ce109353c12a217cbaea5388b76692ef6f947a2f0bc9c73b3008e9fdd",
+      "isPoint": true
+    },
+    {
+      "hex": "e970505090b9d28314aa99d030f8f91337ee9b124e7d23d5ffc5b37efff6997d",
+      "isPoint": true
+    },
+    {
+      "hex": "fc4897ee736214a0d6172dca91efff66265af788df7a3bb672a35a09a040fb5a",
+      "isPoint": false
+    },
+    {
+      "hex": "8809a1871cdcca70faf92fb73169f71c8ccd9ff5b6621d477004db6655d0a3fb",
+      "isPoint": false
+    },
+    {
+      "hex": "bd600875f8e8e03aa1550a6ada6be445da85b870d6077f5b3f227722b9a4b429",
+      "isPoint": true
+    },
+    {
+      "hex": "3b5328d70c54aa572174af48ca0b5c7f46cc82fce081df42aca2d2b3b0f52f54",
+      "isPoint": true
+    },
+    {
+      "hex": "85900922c6eedbdd5f4800ce3120cad2ff97f83af7783318c8f6efc85c0a7de6",
+      "isPoint": false
+    },
+    {
+      "hex": "011f22c5b35237aa6826a797eb542c6f01ceab54845b8af11b20aa7a8da1d70b",
+      "isPoint": false
+    },
+    {
+      "hex": "88997963dc0cf99adc50ff9bfec68c087ab8f9f4e4133e78018c7461965fdf34",
+      "isPoint": false
+    },
+    {
+      "hex": "80a374bc53cf4ea603e3d991f7f9ef0cbd47dbf0bee2cfd8fd9b6beb88ae695f",
+      "isPoint": false
+    },
+    {
+      "hex": "42eb7c22e07bb8c8c5935b57236cec09ec75bd1568b7daf410a8c3fd3cb881cf",
+      "isPoint": false
+    },
+    {
+      "hex": "f1f6708f74a6f31a9622e75aca0fea6643881ed8c216c327bde520bd317e71c4",
+      "isPoint": true
+    },
+    {
+      "hex": "e9fda6fb084bc9ded07e1570462e45b5d14d7c7d6e8fa1e3a21b836d324a869d",
+      "isPoint": false
+    },
+    {
+      "hex": "913c41ee3a9c5f780499ecfbe38e46fe38ca242301de20925878e7d29ee7abce",
+      "isPoint": false
+    },
+    {
+      "hex": "3eb64c12bb6909b1f227496bdb505da2bcd2bac7c85cc0e4e9eb406d6d1087ac",
+      "isPoint": false
+    },
+    {
+      "hex": "3538ed12271b853cb3580f00bb03a9632662c63ec7116edb2e54009017b38a57",
+      "isPoint": false
+    },
+    {
+      "hex": "2a871bca2191c7baefc45399ede04b1d54e98f53721cea0a0be6638f9d7fe844",
+      "isPoint": false
+    },
+    {
+      "hex": "e1184ffa5c075f0cfde6939bc8e0d31f1c7676501cc37f4b09a55accaf00ab1f",
+      "isPoint": false
+    },
+    {
+      "hex": "220bebb6515d30a9be7cedc1c0900b2768cd7810ac000f6cd4faa46361201bd4",
+      "isPoint": false
+    },
+    {
+      "hex": "e41414e2a72c0a9448b7f2fe1e0e3c174e7bc9749c9cc624e2825de034fb5463",
+      "isPoint": false
+    },
+    {
+      "hex": "01d58a01cd0052b4257de126a7664b3f55b897edfa0fad2cf97276e7382159b2",
+      "isPoint": false
+    },
+    {
+      "hex": "9e0b2715e508aec224fa252b6f68d3f513dc7af319bddbd1997746f97b27bf5f",
+      "isPoint": true
+    },
+    {
+      "hex": "bd09537db3320fa6e4198228ed641bc5d3b6db67c8e6067bc83c5a614400b27b",
+      "isPoint": true
+    },
+    {
+      "hex": "bf47ad19d400801775f177dc6bd548805e0e065bc3054ea8e7c9106e0a19c654",
+      "isPoint": true
+    },
+    {
+      "hex": "e6d66e6495d49eaa51aee18ebf9999fab2e0b5e874d56ccb778388baa942e61f",
+      "isPoint": false
+    },
+    {
+      "hex": "b9e768bd4ceaf3187e00e669fb8226f94778df477bf3a406653d3dd311b67e64",
+      "isPoint": false
+    },
+    {
+      "hex": "7b457301b15780b59aff2bccab005a5caf7edd3a780f3cc7f87494a471d357a4",
+      "isPoint": false
+    },
+    {
+      "hex": "d803355a3fb350f48e0240e6a0d841beab73d09f112a15a32b1154749c138b01",
+      "isPoint": true
+    },
+    {
+      "hex": "a86df333ada1eae389020008d1bc440065c8a6d77f3df68d1074fcce7853b37f",
+      "isPoint": false
+    },
+    {
+      "hex": "bb859c15e175bcd4afd898923a28ec265658bd3905627b5d379edd64a878b130",
+      "isPoint": true
+    },
+    {
+      "hex": "bf091a8c4df63b28ea78c1b9d054571274d8fe448932fb59609bf61691d453df",
+      "isPoint": false
+    },
+    {
+      "hex": "25c5f2ed659cb96b19615f563b2f32f8854182f3b9a59971a7a27d76d19000dd",
+      "isPoint": true
+    },
+    {
+      "hex": "22e90efec5706d94a27224fcf43dd984ffaa7421bd1ae26bc7567bf6213e2f68",
+      "isPoint": false
+    },
+    {
+      "hex": "4ac6a1facc78a12dced7ec487458cef5d7ccd5e520387c9f87e19ea85f255bbd",
+      "isPoint": false
+    },
+    {
+      "hex": "b533cfbf9da32502a4302071d3b32ef6364adf9cfaa19e85c2bde04f9338d858",
+      "isPoint": false
+    },
+    {
+      "hex": "2559720ee62c0c94e707e315c64c5ea74d8999b9afd9fb446a33a956ae94d2a5",
+      "isPoint": true
+    },
+    {
+      "hex": "dd6c28f664e7239a1c1dbf1ce1f1a2c61de848440b0876188b623ca6ea306931",
+      "isPoint": false
+    },
+    {
+      "hex": "5a2a4185fa7a52c20691a52526af9cb34ae0e070b88bc1bfb4ca93b8221842dd",
+      "isPoint": false
+    },
+    {
+      "hex": "c57b98fb97c480d220c649074301b33e15ee40228ff50f6cf22011e108b2058f",
+      "isPoint": true
+    },
+    {
+      "hex": "9e3ea6b344c9ada67809860291629d6b46723f63236b588999a9cd27a44d143e",
+      "isPoint": true
+    },
+    {
+      "hex": "4efcefa24d5fad13f6e135bec24abb49f03999f05b70883923de6dcb172bea54",
+      "isPoint": false
+    },
+    {
+      "hex": "e1ed15b15928efc283a3f29bfe249ac94ff346850b10ce10e43b8e0cee516725",
+      "isPoint": false
+    },
+    {
+      "hex": "3af132b46ef945505f73e84168adb6f115295755a25ae6948b866080ad1dd0be",
+      "isPoint": false
+    },
+    {
+      "hex": "e1e448ab9244ff012abcdc785d1fe93661cdbbb410404924d065fde040604231",
+      "isPoint": true
+    },
+    {
+      "hex": "edc419b4b9fdb3c213fdd2c33eb7e2f0ada975656077daa477874b1d2cfbb33a",
+      "isPoint": true
+    },
+    {
+      "hex": "8414bc4fbc5282aea5fe4863422886f6bb267a7467d5f725f8aca09e4cc266a3",
+      "isPoint": false
+    },
+    {
+      "hex": "0e24305df11e950cf8336c8404465e64046504e9236af1d67269c8c6f949dd44",
+      "isPoint": true
+    },
+    {
+      "hex": "3c6340d2ffe0b88c565284e51b62f5e3e471ff092bbf1872af8f3f7b3fe11bd5",
+      "isPoint": false
+    },
+    {
+      "hex": "3ccc18060b772c3a7a487c3e0dc4192e72b7121569a752cdc44a10fbd6981438",
+      "isPoint": false
+    },
+    {
+      "hex": "e940496cf3d269d41ba3557513bedfa3e0cb6a2dacd839d784cfd8e6f5d94735",
+      "isPoint": false
+    },
+    {
+      "hex": "0f7ae32f2f8463397c60452c970635394ea5227fa494f0185d0370426247aecc",
+      "isPoint": false
+    },
+    {
+      "hex": "2cbc6213de26c45dbc4a9c60f9bc07b5e8a6c289cbb6cb12b795efcb32b990a5",
+      "isPoint": true
+    },
+    {
+      "hex": "0ebee9d7c63494438a07ae9ded3623e16daac6282d08b6de37253d240b6d6100",
+      "isPoint": true
+    },
+    {
+      "hex": "2cb75ff50ccc511f66e690b618950729a10d5b5d6d75b913aed4a26bb143e011",
+      "isPoint": true
+    },
+    {
+      "hex": "8c4fa10d9799ebbeed2d3620522a069ef8c7ad4652acd091d3815643ed9fbb0a",
+      "isPoint": true
+    },
+    {
+      "hex": "2ee46c898eda505d237cc3cb361df6324363903cefe3ae367607ec24a6990f0b",
+      "isPoint": true
+    },
+    {
+      "hex": "cb87180af2f167220f49954b79d1685a216eab6da9a6f0ac4168222a0ec98273",
+      "isPoint": true
+    },
+    {
+      "hex": "5ee0bb333ade00d0d0452360959af1eb82f04693071de5892311dfdc8fa35f47",
+      "isPoint": false
+    },
+    {
+      "hex": "cfdd81430c1e0803494e31dbbc5107c4b8febc08d0879aff3883ff0773dd8ebb",
+      "isPoint": true
+    },
+    {
+      "hex": "5e440e82cae9a096f829898898eb459e240a06f992a1145699147e4f6dfd4573",
+      "isPoint": true
+    },
+    {
+      "hex": "30c1c1aac3649ecadfc40c752ede4ea2ccb81da220f2dd73c5bccc726bd9e4b3",
+      "isPoint": true
+    },
+    {
+      "hex": "2d3ed7ebaa6e831dc638f0e7fab0b95f498dd9751833b3b750c39d2f37e963c9",
+      "isPoint": true
+    },
+    {
+      "hex": "c7b5e1d1a12127fd5939a808ce65651a13a859696009a023a5fad5933a820f79",
+      "isPoint": true
+    },
+    {
+      "hex": "b6d5748037a2bf8ba82091b7f21f113e8e2e77c88ca0b1278a465705c8fbdd45",
+      "isPoint": true
+    },
+    {
+      "hex": "e5132aba548084efd9be6f2be89a79bf7937336d7ff18ae99de33613af4d0668",
+      "isPoint": true
+    },
+    {
+      "hex": "f282d3d71e802a3fe9a54da25ff4b5e80599d7906bfdf3a085670682618971dd",
+      "isPoint": false
+    },
+    {
+      "hex": "ccd470eea4ab1d5aa9f75d8ab0c9f27a1623e5e0dbacd40fbf5d81dc456106dc",
+      "isPoint": true
+    },
+    {
+      "hex": "b8ea78016afdeff6f1c14f6a7b40069c59afe6dfb5bc9a85abccbb3febff25ff",
+      "isPoint": false
+    },
+    {
+      "hex": "f938ea1c35ef7e9877d73da9adf6b1fdc3b9ac99173118d9413c1dedaab458b5",
+      "isPoint": false
+    },
+    {
+      "hex": "73d7ae2faabc9a3b8e4b0754d0a2263b99d1e49e67aea2b1e18d646583964d16",
+      "isPoint": false
+    },
+    {
+      "hex": "7acf1a482fd7f39e761ceed777fd7bf167ab5014c125845668060c11d7944682",
+      "isPoint": false
+    },
+    {
+      "hex": "5b89c65fd871610b5bed4db2cf0c5f364bca21c70c2f4be1e20bd326466bb7ea",
+      "isPoint": true
+    },
+    {
+      "hex": "1e11e8ca84caf1ae92585d510b7abb24f25ad665e3200cba2e0fbb8d4aa8eee2",
+      "isPoint": true
+    },
+    {
+      "hex": "721c4492f889d4116abadf3c4e7c6514dc186f333c902c692dcff473162f1f8a",
+      "isPoint": false
+    },
+    {
+      "hex": "896d3f66231ceb019bb827e3eeadcfe18c6c5d5edbd555f61948a98f51752974",
+      "isPoint": true
+    },
+    {
+      "hex": "b5b92fe5b9501ac8b77891232441352d4dc97e4ff66f2e1bc4514695e4dfd926",
+      "isPoint": false
+    },
+    {
+      "hex": "d4887ee6da6ab926f584313a37e777920f7d66fa879f07757706aaface1859ea",
+      "isPoint": true
+    },
+    {
+      "hex": "da6b0bdeae6264cc681bd38cd8a3858baf68cfd2a4aa7e5a0bb1919eb6b58589",
+      "isPoint": true
+    },
+    {
+      "hex": "b802d0f0405c71045859fce91590a4d3693bf468a0157d4f1ca8418d2be0a6be",
+      "isPoint": false
+    },
+    {
+      "hex": "0000000000000000000000000000000000000000000000000000000000000000",
+      "isPoint": true
+    },
+    {
+      "hex": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "isPoint": false
+    },
+    {
+      "hex": "0100000000000000000000000000000000000000000000000000000000000000",
+      "isPoint": true
+    },
+    {
+      "hex": "0100000000000000000000000000000000000000000000000000000000000080",
+      "isPoint": false
+    }
+  ]
+}

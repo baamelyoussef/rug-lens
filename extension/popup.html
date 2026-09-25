@@ -1,0 +1,10 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Rug Lens</title><link rel="stylesheet" href="popup.css"></head><body>
+<header><span class="brand">RUG <b>LENS</b></span><span class="tag">TERMINAL</span></header>
+<h1>Read the risk.<br>See the evidence.</h1><p>Explainable Solana checks beside the coins on trade.padre.gg.</p>
+<label class="toggle"><span>Risk icons</span><input id="enabled" type="checkbox" checked></label>
+<label class="toggle"><span>Public API enrichment</span><input id="external" type="checkbox" checked></label>
+<p class="small">When enabled, token and market addresses are sent to RugCheck and DEX Screener. Solana’s public RPC verifies large holder accounts and resolves supported pool addresses. The on-chain scan sends public holder addresses and transaction signatures to that RPC. No wallet connection, private keys, account cookies or trading permissions.</p>
+<div class="steps"><strong>For deeper checks</strong><p>Open a coin → Holders → All → scroll to the top, then visit Trades. Click its risk icon to inspect the score and review missing evidence.</p></div>
+<p class="small">Scores measure observed warning signals, not the probability of a rug. Unknown data never means safe. This version supports Terminal in English.</p>
+<div class="steps"><strong>Local scan history</strong><p>Up to 500 timestamped evidence snapshots, retained for 7 days. Stored on this browser for later review; no trades or outcomes are inferred.</p><button id="export-history" type="button">Export snapshots</button></div>
+<footer><span id="status" role="status">Ready</span><span>v0.5.2 · Solana</span></footer><script src="popup.js"></script></body></html>

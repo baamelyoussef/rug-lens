@@ -1,0 +1,87 @@
+{
+  "fetchedAt": "2026-09-25T21:29:55.750Z",
+  "names": [
+    "P_ACC",
+    "Jonk",
+    "WAGMI",
+    "chud",
+    "Jean"
+  ],
+  "addresses": [
+    "F6dUfxV6YH21djwgNz9iLPKQ4iEQ1CvaY2jJYTEJP2g8",
+    "8cvJpZbsN9UMGtkywgp1KdjEYyR64Viis2nCjQz9Z2vr",
+    "2Tbdw13DGZ9w6kDEXYB6harhcbiZV8tdQP19s1Cno9G1",
+    "AWCcPiPRjfnSVKeV9H7xSk1iepHNTdjVRSB37q6BocVd",
+    "8Z7qJchy7j4CSyGedb9tx2LC2aoDSQKWYRzrtjS3PpGy"
+  ],
+  "mints": [
+    "5akhMcgCckow5ad7GpoWuA73JCqGZN4pFVm6ZiTfpump",
+    "A4BJEVz6z2Fy9UKaJrN6uzTEEx3QBenrv1kuRUJKpump",
+    "9mQGNgd9YK4sUMjQ3v9S8KvJPbsXpkqoPrU5nGX2qTLD",
+    "Efyt4tMBmiYKjJwrSPLH7RuDVUQE2ofuTebFoNNGuqeR",
+    "4z74i8Jo5zTWkFyyrx5zuusLasgKu6JtREVKgKVSpump"
+  ],
+  "response": {
+    "context": {
+      "apiVersion": "4.3.0",
+      "slot": 450473902
+    },
+    "value": [
+      {
+        "data": [
+          "F7f4N2DYrGBmOak5u88DABgUbfwGAAAAZqGW7SnRAgAYaEkAAAAAAACAxqR+jQMAAJfEj2U9zisGtgmI1FiyNYNUKMf+FMWx3/4vSjFphM2qAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+          "base64"
+        ],
+        "executable": false,
+        "lamports": 6228096,
+        "owner": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P",
+        "rentEpoch": 18446744073709552000,
+        "space": 151
+      },
+      {
+        "data": [
+          "F7f4N2DYrGAZ+0ey9r4DAPF1shsHAAAAGWM1ZmXAAgDxyY4fAAAAAACAxqR+jQMAAC7ocpBTqv2M/CvQrEq+8ojEOTvZjNRInne9CoQP8Zk6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+          "base64"
+        ],
+        "executable": false,
+        "lamports": 530868825,
+        "owner": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P",
+        "rentEpoch": 18446744073709552000,
+        "space": 151
+      },
+      {
+        "data": [
+          "F7f4N2DYrGCpqWOhVSUCAO754ju8AgAAqRFRVcQmAQAtgyoRMgEAAACAxqR+jQMAAPgZ2XgrhPqHeS5SP9ny6I4q2WOYSkHACpjxSOYe7B+4AABsYoIlf6pL+WnTR+IBMz6Kasrl9V4HsltOZQ7Lq/efnwAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+          "base64"
+        ],
+        "executable": false,
+        "lamports": 1417320,
+        "owner": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P",
+        "rentEpoch": 18446744073709552000,
+        "space": 151
+      },
+      {
+        "data": [
+          "F7f4N2DYrGD+pe2IdV8CABoBbzt5AgAA/g3bPORgAQBZirYQ7wAAAACAxqR+jQMAAIuNV+SL11Gg9tnMbdXZlMHDNPgJ1kFLgRt3KPc73JSfAABsYoIlf6pL+WnTR+IBMz6Kasrl9V4HsltOZQ7Lq/efnwAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+          "base64"
+        ],
+        "executable": false,
+        "lamports": 1417320,
+        "owner": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P",
+        "rentEpoch": 18446744073709552000,
+        "space": 151
+      },
+      {
+        "data": [
+          "F7f4N2DYrGCkmE1LLRgBALR1SlQYAAAApAA7/5sZAAC0ySZYEQAAAACAxqR+jQMAAKJFWXiSHwWUKPzbTsHUIEXJ6Mm3yLNnx43lgzNRsnogAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+          "base64"
+        ],
+        "executable": false,
+        "lamports": 74494798364,
+        "owner": "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P",
+        "rentEpoch": 18446744073709552000,
+        "space": 151
+      }
+    ]
+  }
+}

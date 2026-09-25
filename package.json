@@ -1,0 +1,28 @@
+{
+  "name": "rug-lens",
+  "version": "0.6.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "check": "node scripts/check.mjs",
+    "demo": "python3 -m http.server 8741 --bind 127.0.0.1",
+    "package": "python3 scripts/package.py"
+  },
+  "devDependencies": {
+    "linkedom": "^0.18.12"
+  },
+  "description": "Explainable Solana risk evidence overlay for Terminal",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/baamelyoussef/rug-lens.git"
+  },
+  "bugs": {
+    "url": "https://github.com/baamelyoussef/rug-lens/issues"
+  },
+  "homepage": "https://github.com/baamelyoussef/rug-lens#readme",
+  "engines": {
+    "node": ">=22"
+  }
+}
