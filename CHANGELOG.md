@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.6.1
+
+- Update only the affected coin when a provider response arrives, instead of rescoring every Trenches badge.
+- Index detail labels once per scan and reuse column discovery within a Trenches scan.
+- Batch visibility reads before badge insertion to avoid repeated synchronous layout.
+- Limit mutation-driven full scans to once per second, ignore tracked-wallet sidebar updates and stop scans/request dispatch while the tab is hidden. Navigation and provider responses retain their own update paths.
+- Share one parsed stylesheet across badges and skip rebuilding unchanged panel content.
+- Display indeterminate directions for two-sided trades with rounded amounts.
+- Correct synthetic holder identities in the pool-exclusion regression fixture.
+
 ## 0.6.0
 
 - Publish the project under the MIT License with installation, contribution, security and analysis documentation.

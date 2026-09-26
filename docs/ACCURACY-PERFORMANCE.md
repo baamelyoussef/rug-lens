@@ -29,3 +29,14 @@ The local journal keeps a bounded set of observations, reasons, versions, source
 A useful evaluation must specify its token cohort, sampling schedule and outcome definitions in advance. Include unverified tokens and launches that never migrate. Measure coverage, latency, false severe warnings, missed independently evidenced adverse events and exit conditions separately for each lifecycle. Avoid treating the same report provider as both the predictor and independent ground truth.
 
 Code tests establish behavior on specified inputs. A hand-picked set of migrated winners cannot establish prediction accuracy. The 0.6.0 flow and matched-holder observations remain unscored until suitable evidence supports their use in the decision policy.
+
+
+## 0.6.1 browser workload
+
+Provider completions update only the affected record. Full mutation-driven DOM scans are coalesced to at most once per second; periodic five-second freshness checks, navigation, explicit refresh and provider completion are separate paths. Hidden tabs stop DOM scans and new request dispatch; already dispatched requests may finish. Visibility restoration refreshes the page. Scanning priority remains selected coin, New Pairs, Final Stretch and Migrated, including rendered cards below the viewport.
+
+Detail parsing builds one label index per scan. Trenches column discovery is cached within the scan, and all heading visibility reads precede badge insertion. All badges share one parsed stylesheet when constructable stylesheets are supported. The panel keeps its DOM when the displayed evidence is unchanged. No timing optimization treats missing or stale evidence as a passed check.
+
+Page and holder timestamps measure when the displayed DOM was observed. They do not prove Terminal refreshed its feed: an unchanged or disconnected page can be reread. API fetch timestamps likewise do not establish indexing freshness.
+
+A local synthetic 30-card benchmark against commit `5cb7837` used mocked providers and ten warmed runs. Initial engine evaluations fell from 300 to 38. Completing one contract response fell from 30 evaluations to one; median local response-processing time was 3.49 ms before and 0.34 ms after on the development machine. These figures measure this code path, not browser-wide CPU, frame rate, RPC latency or end-to-end live scanning speed. Regression tests assert the work reduction without hardware-dependent timing limits.

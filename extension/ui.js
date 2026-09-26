@@ -29,7 +29,16 @@
   };
   function el(tag,cls,value){const n=document.createElement(tag);if(cls)n.className=cls;if(value!==undefined)n.textContent=value;return n;}
   function icon(level){const svg=document.createElementNS('http://www.w3.org/2000/svg','svg'),path=document.createElementNS(svg.namespaceURI,'path');svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('aria-hidden','true');svg.setAttribute('fill','none');svg.setAttribute('stroke','currentColor');svg.setAttribute('stroke-width','1.8');svg.setAttribute('stroke-linecap','round');svg.setAttribute('stroke-linejoin','round');path.setAttribute('d',paths[level]||paths[['critical','high'].includes(level)?'high':'unknown']);svg.append(path);return svg;}
-  function root(tag){const host=document.createElement(tag),shadow=host.attachShadow({mode:'open'});shadow.append(el('style','',CSS));return {host,shadow};}
+  let sharedSheet;
+  function root(tag){
+    const host=document.createElement(tag),shadow=host.attachShadow({mode:'open'});
+    // Chrome shares one parsed sheet across all coin badges and the panel.
+    if(typeof CSSStyleSheet!=='undefined'&&'adoptedStyleSheets' in shadow){
+      if(!sharedSheet){sharedSheet=new CSSStyleSheet();sharedSheet.replaceSync(CSS);}
+      shadow.adoptedStyleSheets=[sharedSheet];
+    }else shadow.append(el('style','',CSS));
+    return {host,shadow};
+  }
   function badge(onClick){
     const {host,shadow}=root('rug-lens-badge');host.style.cssText='display:inline-flex;margin:0 2px 0 4px;width:18px;height:18px;vertical-align:middle;align-self:center;flex:0 0 18px;line-height:0;';host.setAttribute('data-row-nav-ignore','true');
     const btn=el('button','pill unknown');btn.type='button';shadow.append(btn);
@@ -44,8 +53,9 @@
     return {host,update(result,state='ready'){
       const level=state==='ready'&&result?result.level:'unknown',label=state==='queued'?'Queued for scan':state==='loading'?'Checking':state==='stale'?'Refresh needed':result?.label||'Check risk';
       if(level!==lastLevel){btn.className=`pill ${level}`;btn.replaceChildren(icon(level));lastLevel=level;}
-      btn.title=`${label}${result?.score!=null?` · ${result.score} risk points`:''}\n${result?.decision?.reason||result?.summary||'Waiting for evidence'}${result?.decision?.gaps?.length?'\n'+result.decision.gaps.slice(0,2).join(' · '):''}\n${result?.autoKnown||0}/${result?.autoTotal||0} automatic checks have data. Click for evidence.`;
-      btn.setAttribute('aria-label',`${label} — open Rug Lens evidence`);
+      const title=`${label}${result?.score!=null?` · ${result.score} risk points`:''}\n${result?.decision?.reason||result?.summary||'Waiting for evidence'}${result?.decision?.gaps?.length?'\n'+result.decision.gaps.slice(0,2).join(' · '):''}\n${result?.autoKnown||0}/${result?.autoTotal||0} automatic checks have data. Click for evidence.`;
+      if(btn.title!==title)btn.title=title;
+      const accessible=`${label} — open Rug Lens evidence`;if(btn.getAttribute('aria-label')!==accessible)btn.setAttribute('aria-label',accessible);
     }};
   }
   let active=null,returnFocus=null;
@@ -124,13 +134,13 @@
     const windows=activity.windows||{},preferred=[windows['120s'],windows['30s'],windows['300s']].find(w=>w?.status==='available');
     if(preferred){
       const card=el('div','signal neutral'),title=el('strong');title.append(icon('behaviour'),el('span','',`Observed wallet flow · ${windowLabel(preferred)}`));
-      card.append(title,el('p','',`${preferred.netBuyingWallets} net buying · ${preferred.netSellingWallets} net selling · ${preferred.balancedWallets} balanced`),el('small','','Sampled token flow · trading context · no risk-score adjustment'));body.append(card);
+      card.append(title,el('p','',`${preferred.netBuyingWallets} net buying · ${preferred.netSellingWallets} net selling · ${preferred.balancedWallets} balanced${preferred.indeterminateWallets?` · ${preferred.indeterminateWallets} direction unclear`:''}`),el('small','','Sampled token flow · activity context · no risk-score adjustment'));body.append(card);
     }
     if(activity.count){
       const details=section('wallet-flow','Wallet flow evidence · 30s / 2m / 5m');
       for(const w of Object.values(windows)){
         const row=el('div','check');row.append(el('strong','',windowLabel(w)));
-        if(w.status==='available')row.append(el('p','',`${w.netBuyingWallets} net buying, ${w.netSellingWallets} net selling, ${w.balancedWallets} balanced; ${w.twoSidedWallets} traded both ways.`),el('p','',`${w.approximate?'≈ ':''}${fmt(w.netTokenAmount)} net tokens across complete sampled wallet records.`));
+        if(w.status==='available')row.append(el('p','',`${w.netBuyingWallets} net buying, ${w.netSellingWallets} net selling, ${w.balancedWallets} balanced; ${w.twoSidedWallets} traded both ways.${w.indeterminateWallets?` ${w.indeterminateWallets} have unclear direction due to rounded amounts.`:''}`),el('p','',`${w.approximate?'≈ ':''}${fmt(w.netTokenAmount)} net tokens across complete sampled wallet records.`));
         else row.append(el('p','',`Insufficient sample: ${(w.reasons||[]).join('; ')||'more readable trades needed'}.`));
         row.append(el('small','',`${w.eligibleCount} trades ≥ $${w.minUsd} · full addresses ${Math.round(w.walletCoverage*100)}% · quantities ${Math.round(w.quantityCoverage*100)}% · USD values ${Math.round(w.pricedCoverage*100)}%`));details.append(row);
       }
@@ -142,7 +152,7 @@
       if(change?.status==='available'){
         const shift=change.changePp>0?'increased':change.changePp<0?'decreased':'unchanged';
         details.append(el('p','',`${change.matchedCount} matched addresses: observed supply share ${shift}${change.changePp?' by '+fmt(Math.abs(change.changePp))+' percentage points':''} over ${duration(change.seconds)}.`),el('small','',`${change.matchedCount} matched of ${change.previousObservedCount} earlier / ${change.currentObservedCount} current readable holders.`),el('p','','Sales, transfers, supply changes and rounding can change these percentages. Rows leaving the sample are not treated as sold. This is a session comparison, not a launch-cohort or ownership graph.'));
-      }else details.append(el('p','',change?.reason||'A fresh second holder sample with matching full addresses is needed for a comparison.'));
+      }else details.append(el('p','',change?.reasons?.join(' ')||'A fresh second holder sample with matching full addresses is needed for a comparison.'));
       if(context?.saleKnownCount)details.append(el('p','',`${context.rowsWithSales} of ${context.saleKnownCount} rows with readable sold amounts show recorded sales.`));
       if(context?.durationKnownCount)details.append(el('p','',`Displayed holding duration: median ${duration(context.medianHoldingSeconds)} across ${context.durationKnownCount} sampled rows.`));
       if(context?.pnlKnownCount)details.append(el('p','',`Recorded realized PnL: ${context.positivePnlCount} positive / ${context.negativePnlCount} negative among ${context.pnlKnownCount} readable rows.`));
@@ -159,9 +169,12 @@
     }
     if(active.pressed||active.touching||active.scrollUntil>Date.now()||active.shadow.activeElement?.tagName==='SELECT'){active.pending=[model,callbacks];flushLater(active);return;}
     active.pending=null;
+    const renderKey=JSON.stringify([model.mint,model.market,model.name,model.result,model.signals,model.holderChanges,model.traderContext,model.manual,model.loading,model.queued,model.partsPending,model.staleEvidence,model.disagreements,model.error,model.chainLoading,model.chainError,model.chain,model.canScanChain,model.launchCurve,model.curveError,model.holderVerification,model.providerWarnings,...['pageAt','holderAt','providerAt'].map(key=>model[key]?Math.floor((Date.now()-model[key])/5000):null)]);
+    if(active.renderKey===renderKey)return;
+    active.renderKey=renderKey;
     const prev=active.shadow.querySelector('.drawer'),scroll=prev?.querySelector('.body')?.scrollTop||0,opened=Array.from(prev?.querySelectorAll('details')||[]).filter(d=>d.open).map(d=>d.dataset.key),focusLabel=active.shadow.activeElement?.getAttribute('aria-label');
     const r=model.result,drawer=el('section',`drawer ${r.level}`);drawer.setAttribute('role','dialog');drawer.setAttribute('aria-label','Rug Lens token risk evidence');
-    const head=el('div','head'),brand=el('div','brand','RUG LENS');brand.append(el('span','',model.name||'Token analysis'));brand.title='Terminal · v0.6.0';const x=el('button','close','×');x.type='button';x.setAttribute('aria-label','Close risk panel');x.onclick=close;head.append(brand,x);drawer.append(head);
+    const head=el('div','head'),brand=el('div','brand','RUG LENS');brand.append(el('span','',model.name||'Token analysis'));brand.title='Terminal · v0.6.1';const x=el('button','close','×');x.type='button';x.setAttribute('aria-label','Close risk panel');x.onclick=close;head.append(brand,x);drawer.append(head);
     const body=el('div','body');drawer.append(body);
     const phase=r.lifecycle;
     if(phase){const row=el('div','stage'),title=el('strong');title.append(icon({new:'behaviour',final:'liquidity',migrated:'distribution'}[phase.id]||'unknown'),el('span','',phase.label));row.append(title,el('small','',phase.focus));row.title=phase.source;body.append(row);}

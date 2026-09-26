@@ -1,14 +1,14 @@
 import test from 'node:test';import assert from 'node:assert/strict';import vm from 'node:vm';import {readFileSync} from 'node:fs';import {parseHTML} from 'linkedom';import {fixture,MARKET} from './fixtures.js';
 function setup({external=false,sendMessage,html=fixture(),url=`https://trade.padre.gg/trade/solana/${MARKET}`,adapterPatch,enginePatch,initialNow=Date.now()}={}){
   const {document,window}=parseHTML(html);if(document.querySelector('.scroll'))document.querySelector('.scroll').scrollTop=0;window.HTMLElement.prototype.getBoundingClientRect=()=>({width:100,height:30,top:50,bottom:80,left:0,right:100});
-  let tick,storageChange,now=initialNow,timerId=0;const timers=new Map(),updates=[],panels=[];let opened=false;class Clock extends Date{static now(){return now;}}
+  let tick,storageChange,mutate,now=initialNow,timerId=0;const timers=new Map(),updates=[],panels=[];let opened=false;class Clock extends Date{static now(){return now;}}
   const sandbox={document,location:{href:url},innerHeight:1000,innerWidth:1600,URL,console,Date:Clock,
-    MutationObserver:class{observe(){}},setInterval(fn){tick=fn;},setTimeout(fn,delay){const id=++timerId;timers.set(id,{fn,at:now+delay});return id;},clearTimeout(id){timers.delete(id);},
+    MutationObserver:class{constructor(fn){mutate=fn;}observe(){}},setInterval(fn){tick=fn;},setTimeout(fn,delay){const id=++timerId;timers.set(id,{fn,at:now+delay});return id;},clearTimeout(id){timers.delete(id);},
     chrome:{storage:{local:{get(defaults,cb){cb({enabled:true,external});}},onChanged:{addListener(fn){storageChange=fn;}}},runtime:{sendMessage:sendMessage||(()=>{throw Error('Page-only mode must not send network requests');})}},
     RugLensUI:{isOpen:()=>opened,close(){opened=false;},badge(onClick){const host=document.createElement('rug-lens-badge');host.addEventListener('click',onClick);return {host,update(result){updates.push(result);}};},panel(model){opened=true;panels.push(model);}}};
   const ctx=vm.createContext(sandbox);
   for(const f of ['activity.js','signals.js','engine.js','adapter.js','content.js']){if(f==='content.js'){adapterPatch?.(ctx.RugLensAdapter);enginePatch?.(ctx.RugLensEngine);}vm.runInContext(readFileSync(new URL(`../extension/${f}`,import.meta.url),'utf8'),ctx);}
-  return {document,sandbox,tick:()=>tick(),updates,panels,storageChange,now:()=>now,advance(ms){now+=ms;for(const [id,timer] of [...timers])if(timer.at<=now){timers.delete(id);timer.fn();}}};
+  return {document,sandbox,tick:()=>tick(),updates,panels,storageChange,mutate:changes=>mutate(changes),now:()=>now,advance(ms){now+=ms;for(const [id,timer] of [...timers])if(timer.at<=now){timers.delete(id);timer.fn();}}};
 }
 test('content script injects one heading badge and opens evidence without page-only networking',()=>{
   const s=setup();assert.equal(s.document.querySelectorAll('rug-lens-badge').length,1);s.tick();s.tick();assert.equal(s.document.querySelectorAll('rug-lens-badge').length,1);
@@ -50,7 +50,7 @@ test('Trenches fetches reports without opening a coin and retains a resolved poo
 });
 
 test('Terminal holder observations retain verified pool exclusions and unresolved account gaps',async()=>{
- const pool='C'.repeat(31)+'1',unresolved='E'.repeat(32),mint='A'.repeat(32);
+ const pool='1'.repeat(31)+'2',unresolved='E'.repeat(32),mint='A'.repeat(32);
  const s=setup({external:true,html:fixture().replace('2.5%</span>','25.18%</span>'),sendMessage:async m=>{
   if(m.type==='RUG_LENS_RECORD')return {saved:true};
   return m.part==='contract'?{mint,at:Date.now(),metrics:{},holders:[{address:unresolved,pct:22,accountType:'unresolved'}],holderVerification:{status:'partial',excludedPools:[{address:pool,mint}],unresolved:[{address:unresolved,pct:22}]}}:{mint,at:Date.now(),metrics:{liquidityUsd:50000}};
@@ -157,4 +157,43 @@ test('an AMM response without its own liquidity cannot borrow the Terminal page 
 test('detail history carries the latest mint-scoped stage instead of comparing across a phase change',()=>{
  const s=stageSetup({stage:'final'});navigateToDetail(s);s.document.querySelector('rug-lens-badge').dispatchEvent(new s.document.defaultView.Event('click'));let row=s.panels.at(-1).history.at(-1);assert.equal(row.stage,'final');assert.equal(row.mint,'A'.repeat(32));assert.equal(row.pool,MARKET);
  const header=s.document.querySelector('h2').parentElement,field=s.document.createElement('div');field.innerHTML='<span>Stage</span><span>Migrated</span>';header.append(field);s.tick();row=s.panels.at(-1).history.at(-1);assert.equal(row.stage,'migrated');assert.equal(row.mint,'A'.repeat(32));
+});
+
+test('one completed coin request does not recalculate the entire Trenches feed',async()=>{
+ const pending=new Map(),evaluated=[];
+ const s=setup({html:feedHTML([['new',30]]),url:'https://trade.padre.gg/trenches',external:true,
+  enginePatch:engine=>{const original=engine.evaluate;engine.evaluate=input=>{evaluated.push(input.mint);return original(input);};},
+  sendMessage:message=>message.type==='RUG_LENS_RECORD'?Promise.resolve({saved:true}):new Promise(resolve=>pending.set(`${message.mint}/${message.part}`,resolve))});
+ await flush();evaluated.length=0;
+ const [key,resolve]=[...pending].find(([key])=>key.endsWith('/contract')),mint=key.split('/')[0];
+ resolve({mint,at:s.now(),metrics:{freezeActive:true},holders:[],sources:{}});await flush();
+ assert.ok(evaluated.length>0&&evaluated.length<=2,`Only the changed record should run: ${evaluated.length}`);
+ assert.ok(evaluated.every(value=>value===mint));
+});
+
+test('feed visibility measurements finish before new badge insertion',()=>{
+ let reads=0,writes=0,interleaved=0;
+ setup({html:feedHTML([['new',20]]),url:'https://trade.padre.gg/trenches',adapterPatch:adapter=>{
+  const original=adapter.links;adapter.links=doc=>original(doc).map(entry=>{
+   entry.element.getBoundingClientRect=()=>{reads++;if(writes)interleaved++;return {width:100,height:30,top:0,bottom:30,left:0,right:100};};
+   const insert=entry.element.insertAdjacentElement.bind(entry.element);entry.element.insertAdjacentElement=(...args)=>{writes++;return insert(...args);};return entry;
+  });
+ }});
+ assert.equal(reads,20);assert.equal(writes,20);assert.equal(interleaved,0);
+});
+
+test('rapid feed mutations are coalesced and unrelated tracked trades do not request scans',()=>{
+ let reads=0;const s=setup({html:feedHTML([['new',2]]),url:'https://trade.padre.gg/trenches',adapterPatch:adapter=>{const original=adapter.links;adapter.links=doc=>{reads++;return original(doc);};}});
+ const target=s.document.querySelector('article h1');
+ for(let i=0;i<50;i++){s.mutate([{type:'characterData',target:target.firstChild}]);s.advance(100);}
+ assert.ok(reads<=6,`Too many full scans during five seconds of updates: ${reads}`);
+ const sidebar=s.document.createElement('div');sidebar.id='tracked-wallets-left';sidebar.textContent='unrelated trade';s.document.body.append(sidebar);
+ s.advance(2000);const before=reads;s.mutate([{type:'characterData',target:sidebar.firstChild}]);s.advance(2000);assert.equal(reads,before);
+});
+
+test('hidden tabs stop DOM scanning and request dispatch, then refresh when visible',async()=>{
+ let reads=0,calls=0;const s=setup({external:true,adapterPatch:adapter=>{const original=adapter.read;adapter.read=(...args)=>{reads++;return original(...args);};},sendMessage:async m=>{if(m.type==='RUG_LENS_RECORD')return {saved:true};calls++;return {mint:m.mint,at:Date.now(),metrics:{}};}});
+ await flush();Object.defineProperty(s.document,'hidden',{value:true,writable:true,configurable:true});s.document.dispatchEvent(new s.document.defaultView.Event('visibilitychange'));
+ const before=[reads,calls];s.advance(60000);s.tick();await flush();assert.deepEqual([reads,calls],before);
+ s.document.hidden=false;s.document.dispatchEvent(new s.document.defaultView.Event('visibilitychange'));await flush();assert.ok(reads>before[0]);assert.ok(calls>before[1]);
 });

@@ -73,7 +73,7 @@
   const display=e=>text(e).slice(0,120)||null;
   function route(url){try{const u=new URL(url,'https://trade.padre.gg');const m=u.pathname.match(/^\/trade\/solana\/([1-9A-HJ-NP-Za-km-z]{32,44})\/?$/);return m?m[1]:null;}catch{return null;}}
   function exact(doc,label){return Array.from(doc.querySelectorAll('span,div,p')).find(e=>e.children.length===0&&text(e)===label);}
-  function metric(doc,label){const e=exact(doc,label);return e?percent(leafText(e.parentElement)):null;}
+  function metric(doc,label,index){const e=index?index.get(label):exact(doc,label);return e?percent(leafText(e.parentElement)):null;}
   function read(doc,url){
     const market=route(url);if(!market)return null;
     const heading=doc.querySelector('h2.notranslate')||doc.querySelector('h2');
@@ -87,25 +87,28 @@
       const links=Array.from(header.querySelectorAll('a[href*="dexscreener.com/solana/"]'));
       if(links.length){if(!links.some(a=>a.href.split('/').pop()?.split('?')[0]===market))return null;break;}
     }
+    // Index the rendered labels once per read, rather than walking the whole page per metric.
+    const labelsByText=new Map();
+    for(const element of doc.querySelectorAll('span,div,p'))if(!element.children.length){const label=text(element);if(!labelsByText.has(label))labelsByText.set(label,element);}
     const metrics={};
     for(const [key,label] of Object.entries({top10Pct:'Top 10 H.',insiderPct:'Insiders H.',bundlePct:'Bundles H.',devPct:'Dev holding',sniperPct:'Snipers',freshHoldingPct:'Fresh holding',burnedLiquidityPct:'Burned Liq.'})){
-      const value=metric(doc,label);if(value!==null)metrics[key]=value;
+      const value=metric(doc,label,labelsByText);if(value!==null)metrics[key]=value;
     }
     // A field label alone is not its value. Terminal renders "No" separately.
     for(const [key,label] of [['mintActive','Mint Auth.'],['freezeActive','Freeze Auth.']]){
-      const e=exact(doc,label),value=e?leafText(e.parentElement).replace(label,'').trim():'';
+      const e=labelsByText.get(label),value=e?leafText(e.parentElement).replace(label,'').trim():'';
       if(value==='No')metrics[key]=false;else if(value==='Yes')metrics[key]=true;
     }
     {for(const [key,label] of [['marketCapUsd','Market cap'],['liquidityUsd','Liquidity']]){
-      const e=exact(doc,label);const candidates=[e?.nextElementSibling,e?.parentElement?.nextElementSibling];
+      const e=labelsByText.get(label);const candidates=[e?.nextElementSibling,e?.parentElement?.nextElementSibling];
       const v=candidates.map(el=>number(text(el))).find(v=>v!==null&&v>=0);if(v!==undefined)metrics[key]=v;
     }}
     const holdersTab=Array.from(doc.querySelectorAll('[role="tab"]')).find(e=>/^Holders\s*\(/.test(text(e)));
     const count=text(holdersTab).match(/\(([\d,.]+[KMB]?)\)/i);if(count)metrics.holderCount=number(count[1]);
     const viewers=header?.querySelector('svg path[d^="M0.666992 8.00002"]')?.closest('svg')?.parentElement;
     const viewerCount=number(text(viewers));if(viewerCount!==null)metrics.watchers=viewerCount;
-    const curve=exact(doc,'B. Curve');if(curve){const v=percent(leafText(curve.parentElement.parentElement));if(v!==null)metrics.bondingCurvePct=v;}
-    const label=exact(doc,'Funded By');const columns=label?.parentElement?.parentElement;
+    const curve=labelsByText.get('B. Curve');if(curve){const v=percent(leafText(curve.parentElement.parentElement));if(v!==null)metrics.bondingCurvePct=v;}
+    const label=labelsByText.get('Funded By');const columns=label?.parentElement?.parentElement;
     const holders=[];let holdersTopComplete=false;
     if(columns&&text(columns).includes('Remaining')&&text(columns).includes('Bought')){
       const names=Array.from(columns.children).map(text);
@@ -177,6 +180,7 @@
     return rows;
   }
   function links(doc){
+    const columnCache=new WeakMap();
     // Trenches cards navigate through row handlers, not their social/trade links.
     // The copy-address control identifies the card's own mint reliably.
     return Array.from(doc.querySelectorAll('#main-page [id^="button-copy-address-context-"]')).flatMap(copy=>{
@@ -197,14 +201,14 @@
             const value=percent(leafText(field)||text(field));
             if(value!==null)metrics[key]=value;
           }
-          const stage=columnStage(card||row);
+          const stage=columnStage(card||row,columnCache);
           return [{element:heading,mint,market:mint,name:text(heading),metrics,...stage,stageMint:mint,stageSource:stage.stage==='unknown'?null:'Terminal Trenches column',stageAt:stage.stage==='unknown'?null:Date.now(),at:Date.now()}];
         }
       }
       return [];
     });
   }
-  function columnStage(element){
+  function columnStage(element,cache=new WeakMap()){
     // Sound-control IDs are stable even when Terminal changes its column labels.
     const stages={NEW:['new',3],ALMOST_BONDED:['final',2],RECENTLY_BONDED:['migrated',1]};
     const headingStage=heading=>{const label=text(heading).toLowerCase();return /^(new|new pairs)$/.test(label)?stages.NEW:/^(soon|final stretch)$/.test(label)?stages.ALMOST_BONDED:label==='migrated'?stages.RECENTLY_BONDED:null;};
@@ -215,8 +219,8 @@
       return branch.contains(element)||!branch.querySelector('[id^="button-copy-address-context-"]');
     }
     for(let p=element;p&&p.id!=='main-page';p=p.parentElement){
-      const controls=Array.from(p.querySelectorAll('[id^="button-sound-effect-select-"]'));
-      const headings=Array.from(p.querySelectorAll('h2')).filter(headingStage);
+      if(!cache.has(p))cache.set(p,{controls:Array.from(p.querySelectorAll('[id^="button-sound-effect-select-"]')),headings:Array.from(p.querySelectorAll('h2')).filter(headingStage)});
+      const {controls,headings}=cache.get(p);
       if(controls.length>1||headings.length>1)break;
       if(controls.length===1){
         if(!sharedColumn(controls[0],p))break;

@@ -1,7 +1,7 @@
 (() => {
   if(globalThis.__rugLensLoaded)return;globalThis.__rugLensLoaded=true;
   const A=RugLensAdapter,E=RugLensEngine,U=RugLensUI;
-  let enabled=true,external=true,current=null,selected=null,lastURL=location.href,routeAt=0,timer=null,timerAt=0;
+  let enabled=true,external=true,current=null,selected=null,lastURL=location.href,routeAt=0,timer=null,timerAt=0,lastScanAt=0;
   const records=new Map(),badges=new Map(),stageEvidence=new Map();const TTL=30000,STAGE_TTL=120000,REFRESH_AFTER=25000,REQUEST_TIMEOUT=22000,FAIR_WAIT=15000,PARTS=['contract','market'];
   function record(key){if(!records.has(key))records.set(key,{market:key,manual:{},lastRequest:0,dueAt:Date.now(),partState:{},trades:new Map(),history:[],holderHistory:[],signalState:{}});return records.get(key);}
   function observeStage(r,data){
@@ -89,35 +89,37 @@
     try{Promise.resolve(chrome.runtime.sendMessage({type:'RUG_LENS_RECORD',snapshot:{mint,market,name,stage,stageMint,stageSource,stageAt,result,metrics,evidenceHolders,providerWarnings,holderVerification,launchCurve,staleEvidence,disagreements,holderAt,pageAt,contractAt,marketAt,holderChanges,traderContext,error}})).catch(()=>{});}catch{}
   }
   function show(r){selected=r;draw();}
-  function draw(prepared){if(!selected)return;U.panel(prepared||model(selected),{chain:()=>scanChain(selected),refresh:()=>{selected.force=true;scan();fetchData(selected);},manual:(id,status)=>{selected.manual[id]={status,at:Date.now()};update();}});}
+  function draw(prepared){if(!selected)return;U.panel(prepared||model(selected),{chain:()=>scanChain(selected),refresh:()=>{selected.force=true;scan();fetchData(selected);},manual:(id,status)=>{selected.manual[id]={status,at:Date.now()};update(selected);}});}
   async function scanChain(r){
     if(!external||!enabled||r.chainLoading)return;
-    const mint=r.mint;r.chainLoading=true;r.chainError=null;update();
+    const mint=r.mint;r.chainLoading=true;r.chainError=null;update(r);
     try{
       const data=await chrome.runtime.sendMessage({type:'RUG_LENS_CHAIN',mint,market:r.market});
       if(data?.error)throw Error(data.error);
       if(data?.mint!==mint)throw Error('On-chain result token mismatch');
       if(enabled&&external&&r.mint===mint)r.chain=data;
     }catch(e){r.chainError=e.message;}
-    finally{r.chainLoading=false;update();}
+    finally{r.chainLoading=false;update(r);}
   }
-  function update(){
+  function update(target){
+    if(!enabled||document.hidden)return;
     const models=new Map();
     for(const [el,b] of badges){
+      if(target&&b.record!==target)continue;
       if(!el.isConnected||!b.ui.host.isConnected){b.ui.host.remove();badges.delete(el);continue;}
       if(!models.has(b.record))models.set(b.record,model(b.record));
       const m=models.get(b.record);b.ui.update(m.result,['limited','unknown'].includes(m.result.level)?b.record.loading?'loading':b.record.queued?'queued':'ready':'ready');
       remember(b.record,m);
     }
-    if(selected&&U.isOpen())draw(models.get(selected));
+    if(selected&&U.isOpen()&&(!target||selected===target))draw(models.get(selected));
   }
 
   async function fetchData(r){
-    if(!external||!enabled)return;if(r.loading){promote(r);return;}
+    if(!external||!enabled||document.hidden)return;if(r.loading){promote(r);return;}
     const parts=dueParts(r);if(!parts.length)return;
     const force=!!r.force;r.force=false;r.lastRequest=Date.now();r.queued=false;r.loading=true;r.error=null;r.queueSince=null;
     const mint=r.mint,market=r.market;r.requestMint=mint;r.promoted=priority(r)===4;
-    r.partErrors||={};r.partsPending=[...parts];update();
+    r.partErrors||={};r.partsPending=[...parts];update(r);
     try{
       await Promise.allSettled(parts.map(async part=>{
         const state=r.partState[part]||={};state.lastAttempt=Date.now();delete r.partErrors[part];
@@ -145,18 +147,18 @@
             state.nextAt=Date.now()+retry;
             r.partErrors[part]=`${part==='contract'?'Contract / holders':'Market activity'}: ${e.message.includes('Extension context')?'Reload this Terminal tab after updating the extension':e.message}`;
           }
-        }finally{r.partsPending=r.partsPending.filter(p=>p!==part);update();}
+        }finally{r.partsPending=r.partsPending.filter(p=>p!==part);update(r);}
       }));
-    }finally{r.loading=false;r.lastRequest=Date.now();r.dueAt=nextDue(r);update();schedule();}
+    }finally{r.loading=false;r.lastRequest=Date.now();r.dueAt=nextDue(r);update(r);schedule();}
   }
 
   function attach(anchor,r){
     const old=badges.get(anchor);if(old&&old.record===r)return;if(old){old.ui.host.remove();badges.delete(anchor);}
-    const ui=U.badge(()=>{show(r);fetchData(r);});anchor.insertAdjacentElement('afterend',ui.host);badges.set(anchor,{record:r,ui});ui.update(model(r).result);
+    const ui=U.badge(()=>{show(r);fetchData(r);});anchor.insertAdjacentElement('afterend',ui.host);badges.set(anchor,{record:r,ui});
   }
   function visible(el){const b=el.getBoundingClientRect();return b.width>0&&b.height>0&&b.bottom>0&&b.top<innerHeight&&b.right>0&&b.left<innerWidth;}
   function scan(){
-    if(timer!==null)clearTimeout(timer);timer=null;timerAt=0;if(!enabled)return;
+    if(timer!==null)clearTimeout(timer);timer=null;timerAt=0;if(!enabled||document.hidden)return;lastScanAt=Date.now();
     if(location.href!==lastURL){lastURL=location.href;routeAt=Date.now();if(current)current.page=null;current=null;selected=null;U.close();for(const b of badges.values())b.ui.host.remove();badges.clear();}
     if(Date.now()-routeAt<700){schedule();return;}
     const wanted=new Set();
@@ -173,7 +175,9 @@
     const feed=[];
     // Prepare every card already present in the DOM, including cards below a
     // column's scroll viewport. This lets their first scan progress in background.
-    for(const entry of new URL(location.href).pathname==='/trenches'?A.links(document):[]){
+    // Measure all existing headings before inserting badges to avoid layout thrashing.
+    const entries=new URL(location.href).pathname==='/trenches'?A.links(document).map(entry=>({...entry,visible:visible(entry.element)})):[];
+    for(const entry of entries){
       const r=record(entry.market),mint=r.resolvedAddress===entry.mint?r.resolvedMint:entry.mint;
       if(r.mint&&r.mint!==mint){r.contract=null;r.marketData=null;r.partState={};r.partErrors={};r.chain=null;r.chainError=null;r.signalState={};r.manual={};r.trades.clear();r.history=[];r.holderObservation=null;}
       r.mint=mint;r.name=entry.name;r.stage=entry.stage||'unknown';r.stagePriority=Number(entry.stagePriority)||({new:3,final:2,migrated:1}[r.stage]||0);r.page={metrics:entry.metrics,at:entry.at};observeStage(r,r.resolvedAddress===entry.mint?{...entry,mint,stageMint:mint}:entry);
@@ -181,7 +185,7 @@
       captureHistory(r,entry.metrics,entry.at);
       r.dueAt=nextDue(r);r.queued=external&&!r.loading&&dueParts(r).length>0;
       if(r.queued)r.queueSince??=Date.now();else if(!r.loading)r.queueSince=null;
-      wanted.add(entry.element);attach(entry.element,r);feed.push({r,visible:visible(entry.element)});
+      wanted.add(entry.element);attach(entry.element,r);feed.push({r,visible:entry.visible});
     }
     const active=Array.from(records.values()).filter(r=>r.loading).length,slots=Math.max(0,8-active);
     const candidates=feed.filter(({r})=>r.queued).sort((a,b)=>priority(b.r)-priority(a.r)||Number(!b.r.lastRequest)-Number(!a.r.lastRequest)||Number(b.visible)-Number(a.visible)||(a.r.queueSince-b.r.queueSince));
@@ -199,11 +203,20 @@
       if(due.length)schedule(Math.max(300,Math.min(...due)-Date.now()));
     }
   }
-  function schedule(delay=300){const at=Date.now()+delay;if(timer!==null&&timerAt<=at)return;if(timer!==null)clearTimeout(timer);timerAt=at;timer=setTimeout(scan,delay);}
-  const observer=new MutationObserver(changes=>{if(changes.some(c=>!c.target.closest?.('rug-lens-badge,rug-lens-panel')&&!(c.type==='childList'&&[...c.addedNodes,...c.removedNodes].every(n=>n.nodeType===1&&/^RUG-LENS-/.test(n.tagName)))))schedule();});
+  function schedule(delay=300){if(!enabled||document.hidden)return;const floor=routeAt&&Date.now()-routeAt<700?routeAt+700:lastScanAt+1000;const at=Math.max(Date.now()+delay,floor);delay=at-Date.now();if(timer!==null&&timerAt<=at)return;if(timer!==null)clearTimeout(timer);timerAt=at;timer=setTimeout(scan,delay);}
+  const observer=new MutationObserver(changes=>{
+    if(!enabled||document.hidden)return;
+    const trenches=new URL(location.href).pathname==='/trenches';
+    if(changes.some(c=>{
+      const target=c.target.nodeType===1?c.target:c.target.parentElement;
+      if(target?.closest?.('rug-lens-badge,rug-lens-panel,#tracked-wallets-left,[id*="tracked-wallet"],#klux-trade-panel'))return false;
+      if(trenches&&target?.closest?.('#main-page')===null&&document.getElementById('main-page')&&!target?.contains?.(document.getElementById('main-page')))return false;
+      return !(c.type==='childList'&&[...c.addedNodes,...c.removedNodes].every(n=>n.nodeType===1&&/^RUG-LENS-/.test(n.tagName)));
+    }))schedule();
+  });
   observer.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['id','href','aria-label']});
   setInterval(()=>{if(!document.hidden)scan();},5000);
-  document.addEventListener('visibilitychange',()=>{if(!document.hidden)scan();});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden){if(timer!==null)clearTimeout(timer);timer=null;timerAt=0;}else scan();});
   chrome.storage.local.get({enabled:true,external:true},prefs=>{enabled=prefs.enabled;external=prefs.external;scan();});
   chrome.storage.onChanged.addListener((changes,area)=>{if(area!=='local'||(!changes.enabled&&!changes.external))return;if(changes.enabled)enabled=changes.enabled.newValue;if(changes.external){external=changes.external.newValue;for(const r of records.values()){r.contract=null;r.marketData=null;r.partErrors={};r.chain=null;r.chainError=null;r.lastRequest=0;r.partState={};r.force=false;}}if(!enabled){for(const b of badges.values())b.ui.host.remove();badges.clear();U.close();}else scan();});
 })();

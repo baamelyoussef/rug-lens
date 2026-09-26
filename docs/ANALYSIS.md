@@ -24,7 +24,7 @@ The executable thresholds are in [`extension/engine.js`](https://github.com/baam
 
 The additional activity views carry **zero new scoring weight**. They help explain current observations while their predictive value remains unvalidated.
 
-- **Token-flow windows:** 30 seconds, two minutes and five minutes of observed trades. Full wallet identities and valid token quantities are needed for wallet-level token flow. Newly observed buyers are not necessarily new holders or first-time buyers.
+- **Token-flow windows:** 30 seconds, two minutes and five minutes of observed trades. Full wallet identities and valid token quantities are needed for wallet-level token flow. Newly observed buyers are not necessarily new holders or first-time buyers. Direction remains indeterminate for two-sided wallets with abbreviated quantities. An identified wallet with an unreadable USD trade is excluded from complete flow totals; the missing value is not assumed to be dust.
 - **Matched holder changes:** compare the same full addresses across compatible observations. A row disappearing from a filtered or virtualized table is not a sale. Even a verified balance decrease does not distinguish a sale from a transfer without transaction evidence.
 - **Additional trader fields:** displayed bought/sold token quantities and transaction counts, unit-qualified sold amounts and realized PnL, and holding duration are accepted only when their units and meaning are supported. Displayed PnL does not establish skill, future performance or independent ownership.
 

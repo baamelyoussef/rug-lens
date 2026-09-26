@@ -86,3 +86,17 @@ test('panel exposes stage policy without counting inapplicable LP checks as miss
  assert.doesNotMatch(root.querySelector('[data-key="gaps"]').textContent,/Recheck the destination pool/);
  assert.match(root.querySelector('[data-key="methods"]').textContent,/Not applicable/);
 });
+
+test('identical evidence does not rebuild the open panel body or lose expanded sections',()=>{
+ const s=setup();s.ui.panel(s.model,s.callbacks);const root=s.document.querySelector('rug-lens-panel').shadowRoot,body=root.querySelector('.body'),hero=body.firstElementChild;
+ root.querySelector('[data-key="methods"]').open=true;
+ for(let i=0;i<20;i++)s.ui.panel(s.model,s.callbacks);
+ assert.equal(body.firstElementChild,hero);assert.equal(root.querySelector('[data-key="methods"]').open,true);
+ s.ui.panel({...s.model,error:'Provider is rate limited'},s.callbacks);assert.notEqual(body.firstElementChild,hero);assert.match(body.textContent,/Provider is rate limited/);
+});
+
+test('rounded two-sided wallet activity is explicitly indeterminate and never presented as an entry signal',()=>{
+ const s=setup();s.model.result.activity={count:5,windows:{'30s':{seconds:30,status:'available',netBuyingWallets:1,netSellingWallets:1,balancedWallets:0,indeterminateWallets:1,twoSidedWallets:1,netTokenAmount:40000,approximate:true,eligibleCount:5,minUsd:5,walletCoverage:1,quantityCoverage:1,pricedCoverage:1}}};
+ s.ui.panel(s.model,s.callbacks);const root=s.document.querySelector('rug-lens-panel').shadowRoot;
+ assert.match(root.querySelector('.body').textContent,/1 direction unclear/);assert.match(root.querySelector('[data-key="wallet-flow"]').textContent,/due to rounded amounts/);assert.match(root.querySelector('[data-key="wallet-flow"]').textContent,/≈/);
+});
