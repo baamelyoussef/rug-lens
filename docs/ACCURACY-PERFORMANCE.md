@@ -40,3 +40,12 @@ Detail parsing builds one label index per scan. Trenches column discovery is cac
 Page and holder timestamps measure when the displayed DOM was observed. They do not prove Terminal refreshed its feed: an unchanged or disconnected page can be reread. API fetch timestamps likewise do not establish indexing freshness.
 
 A local synthetic 30-card benchmark against commit `5cb7837` used mocked providers and ten warmed runs. Initial engine evaluations fell from 300 to 38. Completing one contract response fell from 30 evaluations to one; median local response-processing time was 3.49 ms before and 0.34 ms after on the development machine. These figures measure this code path, not browser-wide CPU, frame rate, RPC latency or end-to-end live scanning speed. Regression tests assert the work reduction without hardware-dependent timing limits.
+
+
+## 0.6.2 request scheduling
+
+Provider queue dispatch is independent of DOM scans. A completed coin immediately frees a slot for the next already-discovered card. Refresh/retry timers operate on attached records without rereading the page or renewing DOM observation timestamps. The existing eight-coin concurrency budget, stage order, aged-card fairness, request deadlines and provider cooldowns remain. Removed cards and navigation cannot launch background work from an obsolete queue; hidden or disabled tabs suspend dispatch.
+
+The initial feed paint scores each card once. The final provider part and the settled loading state share a single score update, while an earlier partial result remains visible immediately.
+
+Run `node scripts/benchmark-feed.mjs` from a full Git checkout to compare against 0.6.1 (`7f78aa0`). The deterministic scenario has 30 cards, two mocked 200 ms provider responses per coin, eight coin slots, and no page mutations. Completion time on its simulated clock fell from 3,200 ms to 800 ms; full DOM scans from four to one; total engine evaluations from 240 to 112; initial evaluations from 38 to 30. Both versions issue exactly 60 requests. These numbers isolate scheduler delay and work counts; they are not measured live network latency, browser frame rate or a fourfold real-world speed guarantee.

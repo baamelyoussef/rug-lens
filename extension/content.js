@@ -1,7 +1,7 @@
 (() => {
   if(globalThis.__rugLensLoaded)return;globalThis.__rugLensLoaded=true;
   const A=RugLensAdapter,E=RugLensEngine,U=RugLensUI;
-  let enabled=true,external=true,current=null,selected=null,lastURL=location.href,routeAt=0,timer=null,timerAt=0,lastScanAt=0;
+  let enabled=true,external=true,current=null,selected=null,lastURL=location.href,routeAt=0,timer=null,timerAt=0,lastScanAt=0,requestTimer=null;
   const records=new Map(),badges=new Map(),stageEvidence=new Map();const TTL=30000,STAGE_TTL=120000,REFRESH_AFTER=25000,REQUEST_TIMEOUT=22000,FAIR_WAIT=15000,PARTS=['contract','market'];
   function record(key){if(!records.has(key))records.set(key,{market:key,manual:{},lastRequest:0,dueAt:Date.now(),partState:{},trades:new Map(),history:[],holderHistory:[],signalState:{}});return records.get(key);}
   function observeStage(r,data){
@@ -114,12 +114,12 @@
     if(selected&&U.isOpen()&&(!target||selected===target))draw(models.get(selected));
   }
 
-  async function fetchData(r){
+  async function fetchData(r,paint=true){
     if(!external||!enabled||document.hidden)return;if(r.loading){promote(r);return;}
     const parts=dueParts(r);if(!parts.length)return;
     const force=!!r.force;r.force=false;r.lastRequest=Date.now();r.queued=false;r.loading=true;r.error=null;r.queueSince=null;
     const mint=r.mint,market=r.market;r.requestMint=mint;r.promoted=priority(r)===4;
-    r.partErrors||={};r.partsPending=[...parts];update(r);
+    r.partErrors||={};r.partsPending=[...parts];if(paint)update(r);
     try{
       await Promise.allSettled(parts.map(async part=>{
         const state=r.partState[part]||={};state.lastAttempt=Date.now();delete r.partErrors[part];
@@ -147,9 +147,30 @@
             state.nextAt=Date.now()+retry;
             r.partErrors[part]=`${part==='contract'?'Contract / holders':'Market activity'}: ${e.message.includes('Extension context')?'Reload this Terminal tab after updating the extension':e.message}`;
           }
-        }finally{r.partsPending=r.partsPending.filter(p=>p!==part);update(r);}
+        }finally{r.partsPending=r.partsPending.filter(p=>p!==part);if(r.partsPending.length)update(r);}
       }));
-    }finally{r.loading=false;r.lastRequest=Date.now();r.dueAt=nextDue(r);update(r);schedule();}
+    }finally{r.loading=false;r.lastRequest=Date.now();r.dueAt=nextDue(r);update(r);pumpRequests();}
+  }
+
+  function pumpRequests(paint=true){
+    if(requestTimer!==null)clearTimeout(requestTimer);requestTimer=null;
+    if(!external||!enabled||document.hidden||location.href!==lastURL||Date.now()-routeAt<700)return;
+    const observed=new Map();
+    for(const [anchor,b] of badges)if(anchor.isConnected&&b.ui.host.isConnected)observed.set(b.record,{r:b.record,visible:!!b.record.visible});
+    const feed=[...observed.values()];
+    for(const {r} of feed){
+      r.queued=!r.loading&&dueParts(r).length>0;
+      if(r.queued)r.queueSince??=Date.now();else if(!r.loading)r.queueSince=null;
+    }
+    const active=Array.from(records.values()).filter(r=>r.loading).length,slots=Math.max(0,8-active);
+    const candidates=feed.filter(({r})=>r.queued).sort((a,b)=>priority(b.r)-priority(a.r)||Number(!b.r.lastRequest)-Number(!a.r.lastRequest)||Number(b.visible)-Number(a.visible)||(a.r.queueSince-b.r.queueSince));
+    // Reserve one slot for the oldest long-waiting card. Continuous arrivals in
+    // New Pairs must not leave Final Stretch or Migrated indefinitely unchecked.
+    const oldest=candidates.filter(({r})=>Date.now()-r.queueSince>=FAIR_WAIT).sort((a,b)=>a.r.queueSince-b.r.queueSince)[0];
+    if(oldest&&slots&&!candidates.some(({r})=>priority(r)===4)){candidates.splice(candidates.indexOf(oldest),1);candidates.unshift(oldest);}
+    for(const {r} of candidates.slice(0,slots))fetchData(r,paint);
+    const due=feed.filter(({r})=>!r.loading).map(({r})=>nextDue(r)).filter(at=>at>Date.now());
+    if(due.length)requestTimer=setTimeout(()=>pumpRequests(),Math.max(1,Math.min(...due)-Date.now()));
   }
 
   function attach(anchor,r){
@@ -170,9 +191,8 @@
       for(const [signature,t] of r.trades)if(Date.now()-t.at>300000)r.trades.delete(signature);
       while(r.trades.size>500)r.trades.delete(r.trades.keys().next().value);
       captureHistory(r,data.metrics,data.at);
-      current=r;wanted.add(data.heading);attach(data.heading,r);fetchData(r);
+      current=r;wanted.add(data.heading);attach(data.heading,r);fetchData(r,false);
     }else if(current){current.page=null;current=null;}
-    const feed=[];
     // Prepare every card already present in the DOM, including cards below a
     // column's scroll viewport. This lets their first scan progress in background.
     // Measure all existing headings before inserting badges to avoid layout thrashing.
@@ -185,24 +205,14 @@
       captureHistory(r,entry.metrics,entry.at);
       r.dueAt=nextDue(r);r.queued=external&&!r.loading&&dueParts(r).length>0;
       if(r.queued)r.queueSince??=Date.now();else if(!r.loading)r.queueSince=null;
-      wanted.add(entry.element);attach(entry.element,r);feed.push({r,visible:entry.visible});
+      wanted.add(entry.element);attach(entry.element,r);r.visible=entry.visible;
     }
-    const active=Array.from(records.values()).filter(r=>r.loading).length,slots=Math.max(0,8-active);
-    const candidates=feed.filter(({r})=>r.queued).sort((a,b)=>priority(b.r)-priority(a.r)||Number(!b.r.lastRequest)-Number(!a.r.lastRequest)||Number(b.visible)-Number(a.visible)||(a.r.queueSince-b.r.queueSince));
-    // Reserve one slot for the oldest long-waiting card. Continuous arrivals in
-    // New Pairs must not leave Final Stretch or Migrated indefinitely unchecked.
-    const oldest=candidates.filter(({r})=>Date.now()-r.queueSince>=FAIR_WAIT).sort((a,b)=>a.r.queueSince-b.r.queueSince)[0];
-    if(oldest&&slots&&!candidates.some(({r})=>priority(r)===4)){candidates.splice(candidates.indexOf(oldest),1);candidates.unshift(oldest);}
-    for(const {r} of candidates.slice(0,slots))fetchData(r);
     for(const [anchor,b] of badges)if(!wanted.has(anchor)){b.ui.host.remove();badges.delete(anchor);}
     for(const [key,r] of records)if(records.size>80&&r!==current&&r!==selected&&!r.loading&&!Array.from(badges.values()).some(b=>b.record===r))records.delete(key);
+    pumpRequests(false);
     update();
-    if(external){
-      const observed=new Set([...feed.map(({r})=>r),...(current?[current]:[]),...(selected&&U.isOpen()?[selected]:[])]);
-      const due=[...observed].filter(r=>!r.loading).map(nextDue).filter(at=>at>Date.now());
-      if(due.length)schedule(Math.max(300,Math.min(...due)-Date.now()));
-    }
   }
+
   function schedule(delay=300){if(!enabled||document.hidden)return;const floor=routeAt&&Date.now()-routeAt<700?routeAt+700:lastScanAt+1000;const at=Math.max(Date.now()+delay,floor);delay=at-Date.now();if(timer!==null&&timerAt<=at)return;if(timer!==null)clearTimeout(timer);timerAt=at;timer=setTimeout(scan,delay);}
   const observer=new MutationObserver(changes=>{
     if(!enabled||document.hidden)return;
@@ -216,7 +226,7 @@
   });
   observer.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['id','href','aria-label']});
   setInterval(()=>{if(!document.hidden)scan();},5000);
-  document.addEventListener('visibilitychange',()=>{if(document.hidden){if(timer!==null)clearTimeout(timer);timer=null;timerAt=0;}else scan();});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden){if(requestTimer!==null)clearTimeout(requestTimer);requestTimer=null;if(timer!==null)clearTimeout(timer);timer=null;timerAt=0;}else scan();});
   chrome.storage.local.get({enabled:true,external:true},prefs=>{enabled=prefs.enabled;external=prefs.external;scan();});
-  chrome.storage.onChanged.addListener((changes,area)=>{if(area!=='local'||(!changes.enabled&&!changes.external))return;if(changes.enabled)enabled=changes.enabled.newValue;if(changes.external){external=changes.external.newValue;for(const r of records.values()){r.contract=null;r.marketData=null;r.partErrors={};r.chain=null;r.chainError=null;r.lastRequest=0;r.partState={};r.force=false;}}if(!enabled){for(const b of badges.values())b.ui.host.remove();badges.clear();U.close();}else scan();});
+  chrome.storage.onChanged.addListener((changes,area)=>{if(area!=='local'||(!changes.enabled&&!changes.external))return;if(changes.enabled)enabled=changes.enabled.newValue;if(changes.external){external=changes.external.newValue;for(const r of records.values()){r.contract=null;r.marketData=null;r.partErrors={};r.chain=null;r.chainError=null;r.lastRequest=0;r.partState={};r.force=false;}}if(!enabled||!external){if(requestTimer!==null)clearTimeout(requestTimer);requestTimer=null;}if(!enabled){for(const b of badges.values())b.ui.host.remove();badges.clear();U.close();}else scan();});
 })();

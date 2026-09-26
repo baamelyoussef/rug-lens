@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Rug Lens \u2014 Terminal risk checks",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Explainable Solana risk labels for Terminal. Holder, bundle and contract checks with explicit data coverage.",
   "minimum_chrome_version": "120",
   "permissions": [

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.2
+
+- Dispatch the next queued coin immediately when a request slot becomes free, without waiting for a DOM rescan.
+- Schedule provider refreshes and retries independently of page parsing.
+- Avoid duplicate initial and final loading-state scoring; keep partial results immediate.
+- Retain eight background coin slots, stage priority, fairness, rate-limit backoff and hidden-tab suspension.
+- Add a reproducible synthetic feed benchmark and scheduler regressions.
+
 ## 0.6.1
 
 - Pin the test DOM dependency to an available release so clean installs work.

@@ -44,7 +44,7 @@ test('Trenches fetches reports without opening a coin and retains a resolved poo
  const s=setup({html,url:'https://trade.padre.gg/trenches',external:true,sendMessage:async m=>{
   if(m.type==='RUG_LENS_RECORD')return {saved:true};calls.push(m);return m.part==='contract'?{mint,at:Date.now(),metrics:{freezeActive:true},resolution:m.mint===pool?{address:pool,mint,source:'Solana PumpSwap pool account'}:undefined}:{mint:m.mint,at:Date.now(),metrics:{liquidityUsd:50000}};
  }});
- await new Promise(r=>setImmediate(r));assert.equal(calls.length,2);assert.equal(s.panels.length,0);assert.equal(s.updates.at(-1).level,'critical');
+ await new Promise(r=>setImmediate(r));assert.equal(calls.length,3);assert.equal(s.panels.length,0);assert.equal(s.updates.at(-1).level,'critical');
  s.tick();await new Promise(r=>setImmediate(r));assert.equal(calls.length,3);assert.equal(calls[2].mint,mint);assert.equal(calls[2].market,pool);
  s.tick();assert.equal(calls.length,3);assert.equal(s.document.querySelectorAll('rug-lens-badge').length,1);
 });
@@ -196,4 +196,45 @@ test('hidden tabs stop DOM scanning and request dispatch, then refresh when visi
  await flush();Object.defineProperty(s.document,'hidden',{value:true,writable:true,configurable:true});s.document.dispatchEvent(new s.document.defaultView.Event('visibilitychange'));
  const before=[reads,calls];s.advance(60000);s.tick();await flush();assert.deepEqual([reads,calls],before);
  s.document.hidden=false;s.document.dispatchEvent(new s.document.defaultView.Event('visibilitychange'));await flush();assert.ok(reads>before[0]);assert.ok(calls>before[1]);
+});
+
+
+test('a freed provider slot starts the next coin immediately without another DOM scan',async()=>{
+ let reads=0;const calls=[],pending=[];
+ const s=setup({external:true,html:feedHTML([['new',10]]),url:'https://trade.padre.gg/trenches',
+  adapterPatch:adapter=>{const original=adapter.links;adapter.links=doc=>{reads++;return original(doc);};},
+  sendMessage:m=>{if(m.type==='RUG_LENS_RECORD')return {saved:true};calls.push(m);return new Promise(resolve=>pending.push({m,resolve}));}});
+ await flush();assert.equal(calls.length,16);assert.equal(reads,1);
+ const mint=pending[0].m.mint;
+ for(const task of pending.filter(p=>p.m.mint===mint))task.resolve({mint,at:s.now(),metrics:{mintActive:false}});
+ await flush();assert.equal(calls.length,18);assert.equal(reads,1);
+ assert.equal(calls.at(-1).mint,'A'.repeat(31)+'9');
+ s.advance(1000);await flush();assert.equal(reads,1,'Provider completions must not schedule a page scan');
+});
+
+test('initial requests and the full feed paint evaluate each card only once',()=>{
+ let evaluations=0;
+ setup({external:true,html:feedHTML([['new',30]]),url:'https://trade.padre.gg/trenches',enginePatch:engine=>{const original=engine.evaluate;engine.evaluate=input=>{evaluations++;return original(input);};},sendMessage:()=>new Promise(()=>{})});
+ assert.equal(evaluations,30);
+});
+
+test('provider refresh timers never reread quiet DOM or make page evidence appear newer',async()=>{
+ let reads=0;const calls=[],s=setup({external:true,adapterPatch:adapter=>{const original=adapter.read;adapter.read=(...args)=>{reads++;return original(...args);};},
+  sendMessage:async m=>{if(m.type==='RUG_LENS_RECORD')return {saved:true};calls.push(m);return {mint:m.mint,at:s.now(),metrics:{mintActive:false}};}});
+ await flush();assert.equal(reads,1);s.advance(25000);await flush();assert.equal(calls.length,4);assert.equal(reads,1);
+ s.document.querySelector('rug-lens-badge').dispatchEvent(new s.document.defaultView.Event('click'));
+ assert.equal(s.panels.at(-1).page,false,'An API refresh cannot refresh a DOM timestamp');
+});
+
+test('completion cannot dispatch queued cards after hide, disable, navigation or removal',async()=>{
+ for(const change of ['hidden','disabled','route','removed']){
+  const calls=[],pending=[],s=setup({external:true,html:feedHTML([['new',9]]),url:'https://trade.padre.gg/trenches',sendMessage:m=>{if(m.type==='RUG_LENS_RECORD')return {saved:true};calls.push(m);return new Promise(resolve=>pending.push({m,resolve}));}});
+  await flush();assert.equal(calls.length,16);
+  if(change==='hidden')Object.defineProperty(s.document,'hidden',{value:true});
+  if(change==='disabled')s.storageChange({enabled:{newValue:false}},'local');
+  if(change==='route')s.sandbox.location.href='https://trade.padre.gg/trenches?changed';
+  if(change==='removed')s.document.querySelectorAll('article')[8].remove();
+  const mint=pending[0].m.mint;for(const task of pending.filter(p=>p.m.mint===mint))task.resolve({mint,at:s.now(),metrics:{mintActive:false}});
+  await flush();assert.equal(calls.length,16,change);
+ }
 });
