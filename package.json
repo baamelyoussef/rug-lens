@@ -10,7 +10,7 @@
     "package": "python3 scripts/package.py"
   },
   "devDependencies": {
-    "linkedom": "^0.18.12"
+    "linkedom": "0.18.12"
   },
   "description": "Explainable Solana risk evidence overlay for Terminal",
   "license": "MIT",

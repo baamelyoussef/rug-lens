@@ -2,6 +2,8 @@
 
 ## 0.6.1
 
+- Pin the test DOM dependency to an available release so clean installs work.
+
 - Update only the affected coin when a provider response arrives, instead of rescoring every Trenches badge.
 - Index detail labels once per scan and reuse column discovery within a Trenches scan.
 - Batch visibility reads before badge insertion to avoid repeated synchronous layout.

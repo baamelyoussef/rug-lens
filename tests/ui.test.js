@@ -74,7 +74,7 @@ test('header drag clamps to screen, survives redraw/reopen and resets on double 
  head=root.querySelector('.head');head.dispatchEvent(event(s.window,'pointerdown',{button:0,pointerId:2,clientX:100,clientY:200}));
  s.document.dispatchEvent(event(s.window,'pointermove',{pointerId:2,clientX:-999,clientY:9999}));s.document.dispatchEvent(event(s.window,'pointerup',{pointerId:2}));
  assert.equal(root.querySelector('.drawer').style.left,'8px');assert.equal(root.querySelector('.drawer').style.top,'418px');
- head.dispatchEvent(event(s.window,'dblclick'));assert.equal(root.querySelector('.drawer').style.left,'');
+ head.dispatchEvent(event(s.window,'dblclick'));assert.equal(root.querySelector('.drawer').style.left || '', '');
 });
 
 test('panel exposes stage policy without counting inapplicable LP checks as missing data',()=>{
