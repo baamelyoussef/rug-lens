@@ -1,14 +1,15 @@
 import test from 'node:test';import assert from 'node:assert/strict';import vm from 'node:vm';import {readFileSync} from 'node:fs';import {parseHTML} from 'linkedom';import {fixture,MARKET} from './fixtures.js';
-function setup({external=false,sendMessage,html=fixture(),url=`https://trade.padre.gg/trade/solana/${MARKET}`,adapterPatch,enginePatch,initialNow=Date.now()}={}){
+function setup({external=false,sendMessage,html=fixture(),url=`https://trade.padre.gg/trade/solana/${MARKET}`,adapterPatch,enginePatch,initialNow=Date.now(),deferWork=false}={}){
   const {document,window}=parseHTML(html);if(document.querySelector('.scroll'))document.querySelector('.scroll').scrollTop=0;window.HTMLElement.prototype.getBoundingClientRect=()=>({width:100,height:30,top:50,bottom:80,left:0,right:100});
-  let tick,storageChange,mutate,now=initialNow,timerId=0;const timers=new Map(),updates=[],panels=[];let opened=false;class Clock extends Date{static now(){return now;}}
+  let tick,storageChange,mutate,now=initialNow,timerId=0;const timers=new Map(),idles=new Map(),updates=[],panels=[];let opened=false;class Clock extends Date{static now(){return now;}}
   const sandbox={document,location:{href:url},innerHeight:1000,innerWidth:1600,URL,console,Date:Clock,
     MutationObserver:class{constructor(fn){mutate=fn;}observe(){}},setInterval(fn){tick=fn;},setTimeout(fn,delay){const id=++timerId;timers.set(id,{fn,at:now+delay});return id;},clearTimeout(id){timers.delete(id);},
     chrome:{storage:{local:{get(defaults,cb){cb({enabled:true,external});}},onChanged:{addListener(fn){storageChange=fn;}}},runtime:{sendMessage:sendMessage||(()=>{throw Error('Page-only mode must not send network requests');})}},
+    RugLensWork:{create:()=>({post:(_,job)=>job(),pause(){},clear(){}})},
     RugLensUI:{isOpen:()=>opened,close(){opened=false;},badge(onClick){const host=document.createElement('rug-lens-badge');host.addEventListener('click',onClick);return {host,update(result){updates.push(result);}};},panel(model){opened=true;panels.push(model);}}};
   const ctx=vm.createContext(sandbox);
-  for(const f of ['activity.js','signals.js','engine.js','adapter.js','content.js']){if(f==='content.js'){adapterPatch?.(ctx.RugLensAdapter);enginePatch?.(ctx.RugLensEngine);}vm.runInContext(readFileSync(new URL(`../extension/${f}`,import.meta.url),'utf8'),ctx);}
-  return {document,sandbox,tick:()=>tick(),updates,panels,storageChange,mutate:changes=>mutate(changes),now:()=>now,advance(ms){now+=ms;for(const [id,timer] of [...timers])if(timer.at<=now){timers.delete(id);timer.fn();}}};
+  for(const f of ['activity.js','signals.js','engine.js','adapter.js','content.js']){if(f==='content.js'){if(deferWork){vm.runInContext(readFileSync(new URL('../extension/page-work.js',import.meta.url),'utf8'),ctx);const create=ctx.RugLensWork.create;ctx.RugLensWork.create=options=>create({...options,now:()=>now,ready:()=>true,idle:fn=>{idles.set(++timerId,fn);return timerId;},cancelIdle:id=>idles.delete(id)});}adapterPatch?.(ctx.RugLensAdapter);enginePatch?.(ctx.RugLensEngine);}vm.runInContext(readFileSync(new URL(`../extension/${f}`,import.meta.url),'utf8'),ctx);}
+  return {document,sandbox,idle(){const next=idles.entries().next().value;if(next){idles.delete(next[0]);next[1]({timeRemaining:()=>50});}},tick:()=>tick(),updates,panels,storageChange,mutate:changes=>mutate(changes),now:()=>now,advance(ms){now+=ms;for(const [id,timer] of [...timers])if(timer.at<=now){timers.delete(id);timer.fn();}}};
 }
 test('content script injects one heading badge and opens evidence without page-only networking',()=>{
   const s=setup();assert.equal(s.document.querySelectorAll('rug-lens-badge').length,1);s.tick();s.tick();assert.equal(s.document.querySelectorAll('rug-lens-badge').length,1);
@@ -237,4 +238,25 @@ test('completion cannot dispatch queued cards after hide, disable, navigation or
   const mint=pending[0].m.mint;for(const task of pending.filter(p=>p.m.mint===mint))task.resolve({mint,at:s.now(),metrics:{mintActive:false}});
   await flush();assert.equal(calls.length,16,change);
  }
+});
+
+
+test('production idle scheduler defers initial parsing, API dispatch and paints, then yields during page input',async()=>{
+ let reads=0;const calls=[],s=setup({deferWork:true,external:true,html:feedHTML([['new',10]]),url:'https://trade.padre.gg/trenches',adapterPatch:adapter=>{const original=adapter.links;adapter.links=doc=>{reads++;return original(doc);};},sendMessage:m=>{calls.push(m);return new Promise(()=>{});}});
+ await flush();assert.equal(reads,0);assert.equal(calls.length,0);assert.equal(s.updates.length,0);
+ s.advance(1500);s.idle();await flush();assert.equal(reads,1);assert.equal(calls.length,16);assert.equal(s.updates.length,0);
+ s.advance(16);s.idle();assert.equal(s.updates.length,2,'Paints are sliced, not a whole-feed synchronous loop');
+ s.document.dispatchEvent(new s.document.defaultView.Event('wheel'));
+ s.advance(16);s.idle();assert.equal(s.updates.length,2);
+ for(let i=0;i<10;i++){s.advance(100);s.idle();}
+ assert.equal(s.updates.length,10);
+});
+
+
+test('mutation bursts do not repeatedly walk targets when a full scan is already queued',()=>{
+ const s=setup({html:feedHTML([['new',1]]),url:'https://trade.padre.gg/trenches'}),target=s.document.querySelector('h1');
+ let walks=0;const closest=target.closest.bind(target);target.closest=selector=>{walks++;return closest(selector);};
+ s.mutate([{type:'characterData',target:target.firstChild}]);const first=walks;assert.ok(first>0);
+ for(let i=0;i<100;i++)s.mutate([{type:'characterData',target:target.firstChild}]);
+ assert.equal(walks,first);
 });

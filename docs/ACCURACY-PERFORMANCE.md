@@ -49,3 +49,14 @@ Provider queue dispatch is independent of DOM scans. A completed coin immediatel
 The initial feed paint scores each card once. The final provider part and the settled loading state share a single score update, while an earlier partial result remains visible immediately.
 
 Run `node scripts/benchmark-feed.mjs` from a full Git checkout to compare against 0.6.1 (`7f78aa0`). The deterministic scenario has 30 cards, two mocked 200 ms provider responses per coin, eight coin slots, and no page mutations. Completion time on its simulated clock fell from 3,200 ms to 800 ms; full DOM scans from four to one; total engine evaluations from 240 to 112; initial evaluations from 38 to 30. Both versions issue exactly 60 requests. These numbers isolate scheduler delay and work counts; they are not measured live network latency, browser frame rate or a fourfold real-world speed guarantee.
+
+
+## 0.6.3 Terminal rendering priority
+
+Network fetching already runs in the extension service worker. DOM observation and badge rendering necessarily share the page's main thread, so this release uses cooperative browser idle scheduling rather than claiming complete isolation.
+
+Automatic DOM scans, provider queue dispatch, scoring and badge paints wait until `document.readyState` is complete and the 1.5-second startup grace has elapsed. Background work uses `requestIdleCallback` with no forcing timeout; a busy frame with less than 5 ms idle budget is skipped. Each slice starts at most two jobs and stops starting jobs after 4 ms, then yields at least 16 ms. A single DOM parse or score cannot be preempted mid-function and may exceed that budget; this is not a hard execution-time cap. Pending work for the same record coalesces.
+
+Page input and scrolling defer background work until 350 ms of quiet; navigation clears obsolete queued work and gives the next page a 700 ms grace. Mutation-driven scans are limited to once per two seconds. Once a scan is queued, subsequent mutation notifications skip per-target DOM walks until it runs. Hidden/disabled tabs cancel queued page work. Opening or closing the evidence panel remains an explicit interactive action. Already-running provider requests may finish, but automatic follow-up dispatch and rendering wait for idle time. Lifecycle order, provider cooldowns and missing/stale-evidence rules are unchanged.
+
+During sustained page activity analysis may be delayed. That is intentional: chart and Terminal interactions have priority. This does not prove zero chart-loading impact, and page completion alone does not establish that an asynchronously loaded chart is ready. Browser idle budgets and interaction deferral provide the continuing protection. Scheduler tests cover busy frames, startup/loading, input, cancellation, work coalescing and sliced painting. The request benchmark bypasses idle scheduling to isolate queue behavior; its 0.6.2 numbers must not be read as 0.6.3 end-to-end latency.

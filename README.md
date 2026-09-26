@@ -6,7 +6,7 @@ An open-source, read-only Chrome extension that adds explainable Solana risk ana
 
 ## Install
 
-1. Download `rug-lens-0.6.2.zip` from [GitHub Releases](https://github.com/baamelyoussef/rug-lens/releases/latest) and extract it to a permanent folder.
+1. Download `rug-lens-0.6.3.zip` from [GitHub Releases](https://github.com/baamelyoussef/rug-lens/releases/latest) and extract it to a permanent folder.
 2. Open `chrome://extensions`, enable **Developer mode**, and select **Load unpacked**.
 3. Choose the extracted `rug-lens` folder containing `manifest.json`, then refresh Terminal.
 

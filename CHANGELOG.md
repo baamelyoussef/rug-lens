@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.3
+
+- Give Terminal rendering priority: start background analysis after document completion and a 1.5-second startup grace, then use browser idle callbacks without a forcing timeout.
+- Coalesce pending work and split badge scoring/painting into small batches, yielding between batches.
+- Pause background work around page scrolling/input and briefly after navigation; explicit evidence-panel clicks remain responsive.
+- Reduce mutation-driven full scans to at most once per two seconds.
+- Preserve provider batching, priorities and evidence freshness rules. Busy pages can intentionally delay analysis.
+
 ## 0.6.2
 
 - Dispatch the next queued coin immediately when a request slot becomes free, without waiting for a DOM rescan.

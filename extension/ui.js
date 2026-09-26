@@ -174,7 +174,7 @@
     active.renderKey=renderKey;
     const prev=active.shadow.querySelector('.drawer'),scroll=prev?.querySelector('.body')?.scrollTop||0,opened=Array.from(prev?.querySelectorAll('details')||[]).filter(d=>d.open).map(d=>d.dataset.key),focusLabel=active.shadow.activeElement?.getAttribute('aria-label');
     const r=model.result,drawer=el('section',`drawer ${r.level}`);drawer.setAttribute('role','dialog');drawer.setAttribute('aria-label','Rug Lens token risk evidence');
-    const head=el('div','head'),brand=el('div','brand','RUG LENS');brand.append(el('span','',model.name||'Token analysis'));brand.title='Terminal · v0.6.2';const x=el('button','close','×');x.type='button';x.setAttribute('aria-label','Close risk panel');x.onclick=close;head.append(brand,x);drawer.append(head);
+    const head=el('div','head'),brand=el('div','brand','RUG LENS');brand.append(el('span','',model.name||'Token analysis'));brand.title='Terminal · v0.6.3';const x=el('button','close','×');x.type='button';x.setAttribute('aria-label','Close risk panel');x.onclick=close;head.append(brand,x);drawer.append(head);
     const body=el('div','body');drawer.append(body);
     const phase=r.lifecycle;
     if(phase){const row=el('div','stage'),title=el('strong');title.append(icon({new:'behaviour',final:'liquidity',migrated:'distribution'}[phase.id]||'unknown'),el('span','',phase.label));row.append(title,el('small','',phase.focus));row.title=phase.source;body.append(row);}

@@ -21,6 +21,7 @@ RUNTIME = (
     "journal.js",
     "manifest.json",
     "market-batch.js",
+    "page-work.js",
     "pool-resolution.js",
     "popup.css",
     "popup.html",

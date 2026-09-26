@@ -19,6 +19,8 @@ async function run(ref){
    if(m.type==='RUG_LENS_RECORD')return Promise.resolve({saved:true});requests++;
    return new Promise(resolve=>later(()=>{completed++;resolve({mint:m.mint,at:now,metrics:{mintActive:false},holders:[],sources:{}});},200));
   }}},
+  // This benchmark isolates request dispatch; browser idle scheduling is tested separately.
+  RugLensWork:{create:()=>({post:(_,job)=>job(),pause(){},clear(){}})},
   RugLensUI:{isOpen:()=>false,close(){},panel(){},badge(){const host=document.createElement('rug-lens-badge');return {host,update(){}};}}});
  for(const file of ['activity.js','signals.js','engine.js','adapter.js','content.js']){
   if(file==='content.js'){

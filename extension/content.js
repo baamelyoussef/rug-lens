@@ -1,8 +1,17 @@
 (() => {
   if(globalThis.__rugLensLoaded)return;globalThis.__rugLensLoaded=true;
   const A=RugLensAdapter,E=RugLensEngine,U=RugLensUI;
-  let enabled=true,external=true,current=null,selected=null,lastURL=location.href,routeAt=0,timer=null,timerAt=0,lastScanAt=0,requestTimer=null;
+  let enabled=true,external=true,current=null,selected=null,lastURL=location.href,routeAt=0,timer=null,timerAt=0,lastScanAt=0,requestTimer=null,scanPending=false;
   const records=new Map(),badges=new Map(),stageEvidence=new Map();const TTL=30000,STAGE_TTL=120000,REFRESH_AFTER=25000,REQUEST_TIMEOUT=22000,FAIR_WAIT=15000,PARTS=['contract','market'];
+  const work=RugLensWork.create({canRun:()=>enabled&&!document.hidden});
+  function requestScan(){
+    if(location.href!==lastURL){
+      lastURL=location.href;routeAt=Date.now();work.clear();work.pause(700);
+      if(current)current.page=null;current=null;selected=null;U.close();
+      for(const b of badges.values())b.ui.host.remove();badges.clear();
+    }
+    scanPending=true;work.post('scan',scan);
+  }
   function record(key){if(!records.has(key))records.set(key,{market:key,manual:{},lastRequest:0,dueAt:Date.now(),partState:{},trades:new Map(),history:[],holderHistory:[],signalState:{}});return records.get(key);}
   function observeStage(r,data){
     const at=Number(data.stageAt??data.at),mint=data.stageMint||data.mint;
@@ -89,7 +98,7 @@
     try{Promise.resolve(chrome.runtime.sendMessage({type:'RUG_LENS_RECORD',snapshot:{mint,market,name,stage,stageMint,stageSource,stageAt,result,metrics,evidenceHolders,providerWarnings,holderVerification,launchCurve,staleEvidence,disagreements,holderAt,pageAt,contractAt,marketAt,holderChanges,traderContext,error}})).catch(()=>{});}catch{}
   }
   function show(r){selected=r;draw();}
-  function draw(prepared){if(!selected)return;U.panel(prepared||model(selected),{chain:()=>scanChain(selected),refresh:()=>{selected.force=true;scan();fetchData(selected);},manual:(id,status)=>{selected.manual[id]={status,at:Date.now()};update(selected);}});}
+  function draw(prepared){if(!selected)return;U.panel(prepared||model(selected),{chain:()=>scanChain(selected),refresh:()=>{selected.force=true;requestScan();fetchData(selected);},manual:(id,status)=>{selected.manual[id]={status,at:Date.now()};update(selected);}});}
   async function scanChain(r){
     if(!external||!enabled||r.chainLoading)return;
     const mint=r.mint;r.chainLoading=true;r.chainError=null;update(r);
@@ -103,6 +112,12 @@
   }
   function update(target){
     if(!enabled||document.hidden)return;
+    const pending=target?[target]:new Set([...badges.values()].map(b=>b.record));
+    for(const r of pending)work.post(r,()=>paint(r));
+  }
+  function paint(target){
+    if(!enabled||document.hidden)return;
+    if(location.href!==lastURL){requestScan();return;}
     const models=new Map();
     for(const [el,b] of badges){
       if(target&&b.record!==target)continue;
@@ -152,7 +167,8 @@
     }finally{r.loading=false;r.lastRequest=Date.now();r.dueAt=nextDue(r);update(r);pumpRequests();}
   }
 
-  function pumpRequests(paint=true){
+  function pumpRequests(paint=true){work.post('requests',()=>dispatchRequests(paint));}
+  function dispatchRequests(paint=true){
     if(requestTimer!==null)clearTimeout(requestTimer);requestTimer=null;
     if(!external||!enabled||document.hidden||location.href!==lastURL||Date.now()-routeAt<700)return;
     const observed=new Map();
@@ -179,8 +195,9 @@
   }
   function visible(el){const b=el.getBoundingClientRect();return b.width>0&&b.height>0&&b.bottom>0&&b.top<innerHeight&&b.right>0&&b.left<innerWidth;}
   function scan(){
+    scanPending=false;
     if(timer!==null)clearTimeout(timer);timer=null;timerAt=0;if(!enabled||document.hidden)return;lastScanAt=Date.now();
-    if(location.href!==lastURL){lastURL=location.href;routeAt=Date.now();if(current)current.page=null;current=null;selected=null;U.close();for(const b of badges.values())b.ui.host.remove();badges.clear();}
+    if(location.href!==lastURL){requestScan();return;}
     if(Date.now()-routeAt<700){schedule();return;}
     const wanted=new Set();
     const data=A.read(document,location.href);
@@ -213,9 +230,15 @@
     update();
   }
 
-  function schedule(delay=300){if(!enabled||document.hidden)return;const floor=routeAt&&Date.now()-routeAt<700?routeAt+700:lastScanAt+1000;const at=Math.max(Date.now()+delay,floor);delay=at-Date.now();if(timer!==null&&timerAt<=at)return;if(timer!==null)clearTimeout(timer);timerAt=at;timer=setTimeout(scan,delay);}
+  function schedule(delay=300){if(!enabled||document.hidden)return;const floor=routeAt&&Date.now()-routeAt<700?routeAt+700:lastScanAt+2000;const at=Math.max(Date.now()+delay,floor);delay=at-Date.now();if(timer!==null&&timerAt<=at)return;if(timer!==null)clearTimeout(timer);timerAt=at;timer=setTimeout(requestScan,delay);}
+  for(const type of ['pointerdown','wheel','keydown','touchstart','scroll'])document.addEventListener(type,event=>{
+    if(!event.composedPath?.().some(node=>node?.matches?.('rug-lens-panel,rug-lens-badge')))work.pause(350);
+  },{capture:true,passive:true});
   const observer=new MutationObserver(changes=>{
     if(!enabled||document.hidden)return;
+    if(location.href!==lastURL){requestScan();return;}
+    // A queued scan will see the latest DOM; do not inspect every chart tick meanwhile.
+    if(timer!==null||scanPending)return;
     const trenches=new URL(location.href).pathname==='/trenches';
     if(changes.some(c=>{
       const target=c.target.nodeType===1?c.target:c.target.parentElement;
@@ -225,8 +248,8 @@
     }))schedule();
   });
   observer.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['id','href','aria-label']});
-  setInterval(()=>{if(!document.hidden)scan();},5000);
-  document.addEventListener('visibilitychange',()=>{if(document.hidden){if(requestTimer!==null)clearTimeout(requestTimer);requestTimer=null;if(timer!==null)clearTimeout(timer);timer=null;timerAt=0;}else scan();});
-  chrome.storage.local.get({enabled:true,external:true},prefs=>{enabled=prefs.enabled;external=prefs.external;scan();});
-  chrome.storage.onChanged.addListener((changes,area)=>{if(area!=='local'||(!changes.enabled&&!changes.external))return;if(changes.enabled)enabled=changes.enabled.newValue;if(changes.external){external=changes.external.newValue;for(const r of records.values()){r.contract=null;r.marketData=null;r.partErrors={};r.chain=null;r.chainError=null;r.lastRequest=0;r.partState={};r.force=false;}}if(!enabled||!external){if(requestTimer!==null)clearTimeout(requestTimer);requestTimer=null;}if(!enabled){for(const b of badges.values())b.ui.host.remove();badges.clear();U.close();}else scan();});
+  setInterval(()=>{if(!document.hidden)requestScan();},5000);
+  document.addEventListener('visibilitychange',()=>{if(document.hidden){work.clear();if(requestTimer!==null)clearTimeout(requestTimer);requestTimer=null;if(timer!==null)clearTimeout(timer);timer=null;timerAt=0;}else requestScan();});
+  chrome.storage.local.get({enabled:true,external:true},prefs=>{enabled=prefs.enabled;external=prefs.external;requestScan();});
+  chrome.storage.onChanged.addListener((changes,area)=>{if(area!=='local'||(!changes.enabled&&!changes.external))return;if(changes.enabled)enabled=changes.enabled.newValue;if(changes.external){external=changes.external.newValue;for(const r of records.values()){r.contract=null;r.marketData=null;r.partErrors={};r.chain=null;r.chainError=null;r.lastRequest=0;r.partState={};r.force=false;}}if(!enabled||!external){if(requestTimer!==null)clearTimeout(requestTimer);requestTimer=null;}if(!enabled){work.clear();for(const b of badges.values())b.ui.host.remove();badges.clear();U.close();}else requestScan();});
 })();
